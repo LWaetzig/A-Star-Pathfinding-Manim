@@ -1,4 +1,4 @@
-# APathfindingAlg
+# A* Pathfinding Alg
 Repository for lecture "Integrationsseminar" at DHBW Mannheim
 
 ## What is it
