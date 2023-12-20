@@ -34,7 +34,7 @@ class AstarVideo(MovingCameraScene):
 
         separator3 = Line(element.get_edge_center(UP) + 0.7 * RIGHT, element.get_edge_center(DOWN) + 0.7 * RIGHT, color=BLUE)
 
-        togo = Text("to go").scale(0.5).move_to(element.get_center() + 1.35 * RIGHT + 0.3 * UP)
+        togo = Text("+ to go").scale(0.5).move_to(element.get_center() + 1.35 * RIGHT + 0.3 * UP)
         togo_value = Text(togo_num, color=RED).scale(0.75).move_to(togo.get_center() + 0.45 * DOWN)
 
         group = VGroup(element, element_label, separator1, via, via_value, separator2, went, went_value, separator3, togo, togo_value)
@@ -127,6 +127,10 @@ class AstarVideo(MovingCameraScene):
 
 
 
+
+
+
+
         # Create groups
         group_start = VGroup(point_s, letter_s)
         group_end = VGroup(point_e, letter_e)
@@ -136,31 +140,49 @@ class AstarVideo(MovingCameraScene):
 
         group_lines = VGroup(line_sa, line_sb, line_sc, line_ab, line_ad, line_bd, line_bh, line_df, line_hf, line_hg, line_ge, line_cl, line_li, line_lj, line_ij, line_ik, line_jk, line_ke)
 
-        group_explain_weights = VGroup(weight_li, weight_lj, weight_ij, weight_ik, weight_jk)
-        group_other_weights = VGroup(weight_sa, weight_sb, weight_ab, weight_sc, weight_ad, weight_bd, weight_bh, weight_df, weight_hf, weight_hg, weight_ge, weight_cl, weight_ke)
-        group_explain_heuristics = VGroup(heuristic_i, heuristic_j, heuristic_k, heuristic_l)
-        group_other_heuristics = VGroup(heuristic_s, heuristic_a, heuristic_b, heuristic_c, heuristic_d, heuristic_f, heuristic_g, heuristic_h, heuristic_e)
+        group_explain = VGroup(point_l, point_i, point_j, point_k, point_e)
+        group_explain_weights = VGroup(weight_li, weight_lj, weight_ij, weight_ik, weight_jk, weight_ke)
+        group_other_weights = VGroup(weight_sa, weight_sb, weight_ab, weight_sc, weight_ad, weight_bd, weight_bh, weight_df, weight_hf, weight_hg, weight_ge, weight_cl)
+        group_explain_heuristics = VGroup(heuristic_i, heuristic_j, heuristic_k, heuristic_l, heuristic_e)
+        group_other_heuristics = VGroup(heuristic_s, heuristic_a, heuristic_b, heuristic_c, heuristic_d, heuristic_f, heuristic_g, heuristic_h)
 
         group_sa = VGroup(point_s, point_a)
         group_sb = VGroup(point_s, point_b)
 
-   
+
         # Create list elements
         list_outline = RoundedRectangle(width=7, height=12, corner_radius=0.25, color=BLUE).move_to(12 * RIGHT + 0.5 * DOWN)
         list_title = Text("Open List").scale(1).move_to(list_outline.get_center() + 6.5 * UP)
 
         element_s_group, element_s_via_text, element_s_went_num, element_s_togo_num = self.create_list_element(
-            point_s.get_center() + 1.4 * DOWN + 1 * RIGHT, "S", "-", "0", ""
+            point_s.get_center() + 1.4 * UP + 1 * RIGHT, "S", "-", "-", "-"
         )
         
 
         element_a_group, element_a_via_text, element_a_went_num, element_a_togo_num = self.create_list_element(
-            point_a.get_center() + 2 * UP + 2 * RIGHT, "A", "S", "", ""
+            point_a.get_center() + 2 * UP + 2 * RIGHT, "A", "-", "-", "-"
         )
 
         element_b_group, element_b_via_text, element_b_went_num, element_b_togo_num = self.create_list_element(
-            group_sb.get_center() + 1.4 * DOWN + 1.5 * RIGHT, "B", "S", "2", "9"
+            group_sb.get_center() + 1.4 * DOWN + 1.5 * RIGHT, "B", "-", "-", "-"
         )
+
+
+        # elements to animate
+        animation_group_heur_s = VGroup(element_s_togo_num, heuristic_s.copy())
+        element_s_group.add(animation_group_heur_s)
+
+        animation_group_via_as = VGroup(element_a_via_text, letter_s.copy())
+        animation_group_went_as = VGroup(element_a_went_num, weight_sa.copy())
+        animation_group_heur_a = VGroup(element_a_togo_num, heuristic_a.copy(), weight_sa.copy())
+        element_a_group.add(animation_group_via_as, animation_group_went_as, animation_group_heur_a)
+
+        animation_group_via_bs = VGroup(element_b_via_text, letter_s.copy())
+        animation_group_went_bs = VGroup(element_b_went_num, weight_sb.copy())
+        animation_group_heur_b = VGroup(element_b_togo_num, heuristic_b.copy(), weight_sb.copy())
+        element_b_group.add(animation_group_via_bs, animation_group_went_bs, animation_group_heur_b)
+   
+        
 
 
 
@@ -181,7 +203,7 @@ class AstarVideo(MovingCameraScene):
         self.play(Create(group_lines))
         self.wait(2)
 
-        self.play(self.camera.frame.animate.scale(0.5).move_to(group_explain_weights.get_center()), run_time=2)
+        self.play(self.camera.frame.animate.scale(0.8).move_to(group_explain.get_center()), run_time=2)
         self.wait(2)
 
         self.play(Write(group_explain_weights))
@@ -202,38 +224,51 @@ class AstarVideo(MovingCameraScene):
 
         self.play(Write(list_title), Create(list_outline))
 
-        self.play(self.camera.frame.animate.scale(0.3).move_to(point_s.get_center() + 1 * RIGHT), run_time=2)
-        self.play(Create(element_s_group))
+        self.play(self.camera.frame.animate.scale(0.3).move_to(point_s.get_center() + 1 * RIGHT + 1 * UP), run_time=2)
+        self.play(Create(element_s_group), run_time=2)
+        element_s_went_num.set_text("0")
+        element_s_togo_num.set_text("10")
+        self.play(
+            ReplacementTransform(element_s_went_num, Text("0", color=GREEN).scale(0.75).move_to(element_s_went_num.get_center())),
+            ReplacementTransform(animation_group_heur_s, Text("10", color=RED).scale(0.75).move_to(element_s_togo_num.get_center()))
+        )
 
         self.play(Restore(overview_camera), run_time=2)
         self.play(element_s_group.animate.scale(1.5).move_to(list_outline.get_center() + 5 * UP), run_time=2)
         self.wait(2)
 
         self.play(self.camera.frame.animate.scale(0.3).move_to(group_sa.get_center() + 1 * UP), run_time=2)
-        self.play(Create(element_a_group))
-        copied_weight_7 = weight_sa.copy().move_to(element_a_went_num.get_center())
+        self.play(Create(element_a_group), run_time=2)
+        element_a_via_text.set_text("S")
+        self.play(ReplacementTransform(animation_group_via_as, Text("S").scale(0.75).move_to(element_a_via_text.get_center())), run_time=1.5)
+        element_a_went_num.set_text("7")
+        self.play(ReplacementTransform(animation_group_went_as, Text("7", color=GREEN).scale(0.75).move_to(element_a_went_num.get_center())), run_time=1.5)
+        element_a_togo_num.set_text("16")
+        self.play(ReplacementTransform(animation_group_heur_a, Text("16", color=RED).scale(0.75).move_to(element_a_togo_num.get_center())), run_time=2)
+        self.wait(2)
 
-        # Führen Sie die Animation durch
-        self.play(
-            ReplacementTransform(weight_sa.copy(), copied_weight_7),
-            ReplacementTransform(copied_weight_7, element_a_went_num),
-            run_time=2
-        )
+        self.play(Restore(overview_camera), run_time=2)
+        self.play(element_a_group.animate.scale(1.5).move_to(list_outline.get_center() + 3.5 * UP), run_time=2)
         self.wait(2)
 
         self.play(self.camera.frame.animate.scale(0.3).move_to(group_sb.get_center() + 1 * RIGHT), run_time=2)
-        self.play(Create(element_b_group))
+        self.play(Create(element_b_group), run_time=2)
+        element_b_via_text.set_text("S")
+        self.play(ReplacementTransform(animation_group_via_bs, Text("S").scale(0.75).move_to(element_b_via_text.get_center())), run_time=1.5)
+        element_b_went_num.set_text("2")
+        self.play(ReplacementTransform(animation_group_went_bs, Text("2", color=GREEN).scale(0.75).move_to(element_b_went_num.get_center())), run_time=1.5)
+        element_b_togo_num.set_text("9")
+        self.play(ReplacementTransform(animation_group_heur_b, Text("9", color=RED).scale(0.75).move_to(element_b_togo_num.get_center())), run_time=2)
         self.wait(2)
 
-        """element_b_via_text.set_text("A")
-        element_b_went_num.set_text("3")
-        element_b_togo_num.set_text("8")
+        self.play(Restore(overview_camera), run_time=2)
+        self.play(element_a_group.animate.move_to(list_outline.get_center() + 2 * UP), element_b_group.animate.scale(1.5).move_to(list_outline.get_center() + 3.5 * UP), run_time=2)
+        self.wait(2)
 
-        self.play(
-            ReplacementTransform(element_b_via_text, Text("A").scale(0.75).move_to(element_b_via_text.get_center())),
-            ReplacementTransform(element_b_went_num, Text("3").scale(0.75).move_to(element_b_went_num.get_center())),
-            ReplacementTransform(element_b_togo_num, Text("8").scale(0.75).move_to(element_b_togo_num.get_center()))
-        )"""
+        """
+        weiteres vorgehen:
+        - element S muss vorher schon aus der liste entfernt werden weil startknoten
+        """
 
 
         self.wait(10)
