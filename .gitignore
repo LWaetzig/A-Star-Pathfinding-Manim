@@ -132,3 +132,5 @@ dmypy.json
 
 # exclude node mdoules
 node_modules
+
+media/**
