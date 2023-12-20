@@ -8,14 +8,14 @@ class Introduction(Scene):
             "Heute tauchen wir in die faszinierende Welt des A* Algorithmus ein.",
             "A* ist ein intelligenter Suchalgorithmus,", 
             "der in vielen Bereichen der künstlichen Intelligenz und Robotik eingesetzt wird.",
-            "Es hilft, den effizientesten Weg zwischen zwei Punkten in einem Netzwerk zu finden.",
+            "Er hilft, den effizientesten Weg zwischen zwei Punkten in einem Netzwerk zu finden.",
             "Lasst uns gemeinsam entdecken, wie dieser mächtige Algorithmus funktioniert!"
         ]
         satz1 = Text("Herzlich Willkommen bei AlgorithmAlchemy!", font_size=24, font="Arial").to_edge(DOWN)
         satz2 = Text("Heute tauchen wir in die faszinierende Welt des A* Algorithmus ein.", font_size=24, font="Arial").to_edge(DOWN)
         satz3 = Text("A* ist ein intelligenter Suchalgorithmus,", font_size=24, font="Arial").to_edge(DOWN)
         satz4 = Text("der in vielen Bereichen der künstlichen Intelligenz und Robotik eingesetzt wird.", font_size=24, font="Arial").to_edge(DOWN)
-        satz5 = Text("Es hilft, den effizientesten Weg zwischen zwei Punkten in einem Netzwerk zu finden.", font_size=24, font="Arial").to_edge(DOWN)
+        satz5 = Text("Er hilft, den effizientesten Weg zwischen zwei Punkten in einem Netzwerk zu finden.", font_size=24, font="Arial").to_edge(DOWN)
         satz6 = Text("Lasst uns gemeinsam entdecken, wie dieser mächtige Algorithmus funktioniert!", font_size=24, font="Arial").to_edge(DOWN)
         img = ImageMobject(r"\Users\alexp\OneDrive\Studium\5_Semester\Integrationsseminar\Logo1.png").scale_to_fit_width(8)
 
