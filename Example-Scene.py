@@ -156,6 +156,8 @@ class AstarVideo(MovingCameraScene):
         list_outline = RoundedRectangle(width=7, height=12, corner_radius=0.25, color=BLUE).move_to(12 * RIGHT + 0.5 * DOWN)
         list_title = Text("Open List").scale(1).move_to(list_outline.get_center() + 6.5 * UP)
 
+        focus_line = DashedLine(start=list_outline.get_edge_center(LEFT) + 4 * UP, end=list_outline.get_edge_center(RIGHT) + 4 * UP, color=BLUE)
+
         path_list_outline = RoundedRectangle(width=7, height=12, corner_radius=0.25, color=BLUE).move_to(22 * RIGHT + 0.5 * DOWN)
         path_list_title = Text("Done List").scale(1).move_to(path_list_outline.get_center() + 6.5 * UP)
 
@@ -250,12 +252,7 @@ class AstarVideo(MovingCameraScene):
         )
         
         self.play(Restore(camera), run_time=2)
-        """
-        self.play(self.camera.frame.animate.move_to(15 * RIGHT), run_time=2)
-        
-        self.play(Write(path_list_title), Create(path_list_outline))
-        """
-        self.play(element_s_group.animate.scale(1.5).move_to(list_outline.get_center() + 5 * UP), run_time=2)
+        self.play(element_s_group.animate.scale(1.5).move_to(list_outline.get_center() + 5 * UP), Create(focus_line), run_time=2)
         self.wait(2)
 
         self.play(self.camera.frame.animate.scale(0.3).move_to(group_sa.get_center() + 1 * UP), run_time=2)
@@ -269,7 +266,7 @@ class AstarVideo(MovingCameraScene):
         self.wait(2)
 
         self.play(Restore(camera), run_time=2)
-        self.play(element_a_group.animate.scale(1.5).move_to(list_outline.get_center() + 3.25 * UP), run_time=2)
+        self.play(element_a_group.animate.scale(1.5).move_to(list_outline.get_center() + 3 * UP), run_time=2)
         self.wait(2)
 
         self.play(self.camera.frame.animate.scale(0.3).move_to(group_sb.get_center() + 1 * RIGHT), run_time=2)
@@ -283,7 +280,7 @@ class AstarVideo(MovingCameraScene):
         self.wait(2)
 
         self.play(Restore(camera), run_time=2)
-        self.play(element_a_group.animate.move_to(list_outline.get_center() + 1.5 * UP), element_b_group.animate.scale(1.5).move_to(list_outline.get_center() + 3.25 * UP), run_time=2)
+        self.play(element_a_group.animate.move_to(list_outline.get_center() + 1.25 * UP), element_b_group.animate.scale(1.5).move_to(list_outline.get_center() + 3 * UP), run_time=2)
         self.wait(2)
 
         self.play(self.camera.frame.animate.scale(0.3).move_to(group_sc.get_center() + 1 * UP), run_time=2)
@@ -297,7 +294,7 @@ class AstarVideo(MovingCameraScene):
         self.wait(2)
 
         self.play(Restore(camera), run_time=2)
-        self.play(element_a_group.animate.move_to(list_outline.get_center() + 0.25 * DOWN), element_c_group.animate.scale(1.5).move_to(list_outline.get_center() + 1.5 * UP), run_time=2)
+        self.play(element_a_group.animate.move_to(list_outline.get_center() + 0.5 * DOWN), element_c_group.animate.scale(1.5).move_to(list_outline.get_center() + 1.25 * UP), run_time=2)
         self.wait(2)
 
         self.play(Restore(camera), run_time=2)
@@ -305,7 +302,7 @@ class AstarVideo(MovingCameraScene):
         
         self.play(Write(path_list_title), Create(path_list_outline))
         self.wait(2)
-        self.play(element_s_group.animate.move_to(path_list_outline.get_center() + 5 * UP), element_b_group.animate.move_to(list_outline.get_center() + 5 * UP), element_c_group.animate.move_to(list_outline.get_center() + 3.25 * UP), element_a_group.animate.move_to(list_outline.get_center() + 1.5 * UP), run_time=2)
+        self.play(element_s_group.animate.move_to(path_list_outline.get_center() + 5 * UP), element_b_group.animate.move_to(list_outline.get_center() + 5 * UP), element_c_group.animate.move_to(list_outline.get_center() + 3 * UP), element_a_group.animate.move_to(list_outline.get_center() + 1.25 * UP), run_time=2)
         self.wait(2)
 
         self.play(Restore(camera), run_time=2)
