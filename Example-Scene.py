@@ -151,6 +151,7 @@ class AstarVideo(MovingCameraScene):
         group_sc = VGroup(point_s, point_c)
         group_sba = VGroup(group_sb, point_a)
         group_sbd = VGroup(group_sb, point_d)
+        group_sbh = VGroup(group_sb, point_h)
 
 
         # Create list elements
@@ -186,6 +187,10 @@ class AstarVideo(MovingCameraScene):
             group_sbd.get_center() + 1 * DOWN + 3 * RIGHT, "D", "-", "-", "-"
         )
 
+        element_h_group, element_h_via_text, element_h_went_num, element_h_togo_num = self.create_list_element(
+            group_sbd.get_center() + 1 * DOWN + 3 * RIGHT, "H", "-", "-", "-"
+        )
+
         
 
 
@@ -219,6 +224,12 @@ class AstarVideo(MovingCameraScene):
         animation_group_heur_d = VGroup(element_d_togo_num, heuristic_d.copy())
         element_d_group.add(animation_group_via_db, animation_group_went_db, animation_group_heur_d)
         animation_went_dbs_copy = Text("6", color=GREEN).scale(0.75).move_to(element_d_went_num.get_center())
+
+        animation_group_via_hb = VGroup(element_h_via_text, letter_b.copy())
+        animation_group_went_hb = VGroup(element_h_went_num, weight_sb.copy(), weight_bh.copy())
+        animation_group_heur_h = VGroup(element_h_togo_num, heuristic_h.copy())
+        element_h_group.add(animation_group_via_hb, animation_group_went_hb, animation_group_heur_h)
+        animation_went_hbs_copy = Text("3", color=GREEN).scale(0.75).move_to(element_h_went_num.get_center())
 
    
         
@@ -361,6 +372,26 @@ class AstarVideo(MovingCameraScene):
 
         self.play(Restore(camera), run_time=2)
         self.play(element_d_group.animate.scale(1.5).move_to(list_outline.get_center() + 0.5 * DOWN), run_time=2)
+        self.wait(2)
+
+        self.play(self.camera.frame.animate.scale(0.4).move_to(group_sbh.get_center() + 0.9 * DOWN + 3 * RIGHT), run_time=2)
+
+        self.play(Create(element_h_group), run_time=2)
+        element_h_via_text.set_text("B")
+        self.play(ReplacementTransform(animation_group_via_hb, Text("B").scale(0.75).move_to(element_h_via_text.get_center())), run_time=1.5)
+        element_h_went_num.set_text("3")
+        self.play(ReplacementTransform(animation_group_went_hb, Text("3", color=GREEN).scale(0.75).move_to(element_h_went_num.get_center())), run_time=1.5)
+        animation_group_heur_h.add(animation_went_hbs_copy)
+        element_h_togo_num.set_text("9")
+        self.play(ReplacementTransform(animation_group_heur_h, Text("9", color=RED).scale(0.75).move_to(element_h_togo_num.get_center())), run_time=2)
+        self.wait(2)
+
+        self.play(Restore(camera), run_time=2)
+        self.play(element_h_group.animate.scale(1.5).move_to(list_outline.get_center() + 3 * UP), element_c_group.animate.move_to(list_outline.get_center() + 1.25 * UP), new_element_a_group.animate.move_to(list_outline.get_center() + 0.5 * DOWN), element_d_group.animate.move_to(list_outline.get_center() + 2.25 * DOWN),run_time=2)
+        self.wait(2)
+        self.play(self.camera.frame.animate.move_to(15 * RIGHT), run_time=2)
+        self.play(element_b_group.animate.move_to(path_list_outline.get_center() + 3.25 * UP), element_h_group.animate.move_to(list_outline.get_center() + 5 * UP), element_c_group.animate.move_to(list_outline.get_center() + 3 * UP), new_element_a_group.animate.move_to(list_outline.get_center() + 1.25 * UP), element_d_group.animate.move_to(list_outline.get_center() + 0.5 * DOWN),run_time=2)
+        self.wait(2)
         
 
 
