@@ -3,6 +3,8 @@ import numpy as np
 
 
 class AstarVideo(MovingCameraScene):
+
+    # Function to adjust the line to the boundary of the circle
     def adjust_line_to_circle_boundary(self, start_point, end_point):
         line_vector = end_point.get_center() - start_point.get_center()
         normalized_vector = line_vector / np.linalg.norm(line_vector)
@@ -11,6 +13,7 @@ class AstarVideo(MovingCameraScene):
 
         return Line(adjusted_start, adjusted_end)
 
+    # Function to create a point with a centered label
     def create_point(self, center, label):
         circle = Circle(radius=0.25, color=BLUE, fill_opacity=0.5)
         letter = Text(label, color=WHITE).scale(0.5)
@@ -19,6 +22,7 @@ class AstarVideo(MovingCameraScene):
 
         return circle, letter
 
+    # Function to create a list element
     def create_list_element(self, position, label, via_text, went_num, togo_num):
         element = RoundedRectangle(
             width=4, height=1, corner_radius=0.25, color=BLUE
@@ -346,6 +350,7 @@ class AstarVideo(MovingCameraScene):
         group_explain_weights = VGroup(
             weight_li, weight_lj, weight_ij, weight_ik, weight_jk, weight_ke
         )
+        
         group_other_weights = VGroup(
             weight_sa,
             weight_sb,
@@ -360,9 +365,11 @@ class AstarVideo(MovingCameraScene):
             weight_ge,
             weight_cl,
         )
+
         group_explain_heuristics = VGroup(
             heuristic_i, heuristic_j, heuristic_k, heuristic_l, heuristic_e
         )
+
         group_other_heuristics = VGroup(
             heuristic_s,
             heuristic_a,
@@ -435,6 +442,7 @@ class AstarVideo(MovingCameraScene):
             letter_k,
         )
 
+        # Groups for the expanding of the list
         group_sa = VGroup(point_s, point_a)
         group_sb = VGroup(point_s, point_b)
         group_sc = VGroup(point_s, point_c)
@@ -445,7 +453,7 @@ class AstarVideo(MovingCameraScene):
         group_sbhg = VGroup(group_sbh, point_g)
         group_sbhge = VGroup(group_sbhg, point_e)
 
-        # Create list elements
+        # Create the different list elements (Labels of the points) and the list
         list_outline = RoundedRectangle(
             width=7, height=12, corner_radius=0.25, color=BLUE
         ).move_to(12 * RIGHT + 0.5 * DOWN)
@@ -556,7 +564,7 @@ class AstarVideo(MovingCameraScene):
             group_sbhge.get_center() + 1 * DOWN + 1.5 * RIGHT, "E", "-", "-", "-"
         )
 
-        # elements to animate
+        # create some Groups and Elements for animation purposes
         animation_group_heur_s = VGroup(element_s_togo_num, heuristic_s.copy())
         element_s_group.add(animation_group_heur_s)
 
@@ -675,24 +683,28 @@ class AstarVideo(MovingCameraScene):
             element_e_group,
         )
 
-        # Start with the timeline
+        # Start with the Video-timeline
 
+        # Create the title
         self.play(Write(title))
         self.play(FadeOut(title, run_time=1.5))
         self.wait(1)
 
+        # Create the text for the start and end point and morph them into the points
         camera = self.camera.frame.save_state()
         self.play(Write(start_text), Write(end_text))
         self.wait(2)
-
         self.play(
             ReplacementTransform(start_text, group_start),
             ReplacementTransform(end_text, group_end),
         )
+
+        # Create the whole graph
         self.play(Create(group_other_points), Write(group_other_letters), run_time=2)
         self.play(Create(group_lines))
         self.wait(2)
 
+        # Zoom to a Group of ponts to explain the weights and heuristics
         self.play(
             self.camera.frame.animate.scale(0.8).move_to(group_explain.get_center()),
             run_time=2,
@@ -704,6 +716,7 @@ class AstarVideo(MovingCameraScene):
         self.play(Write(group_explain_heuristics))
         self.wait(2)
 
+        # Zoom out again and show the other weights and heuristics
         self.play(Restore(camera), run_time=2)
         self.wait(2)
 
@@ -712,11 +725,13 @@ class AstarVideo(MovingCameraScene):
         self.play(Write(group_other_heuristics))
         self.wait(2)
 
+        # Zoom out of the graph and create the open list
         self.play(self.camera.frame.animate.scale(1.75).move_to(5 * RIGHT), run_time=3)
         camera = self.camera.frame.save_state()
 
         self.play(Write(list_title), Create(list_outline))
 
+        # Create the label of Point S, the first element of the open list and animate it
         self.play(
             self.camera.frame.animate.scale(0.3).move_to(
                 point_s.get_center() + 1 * RIGHT + 1 * UP
@@ -741,6 +756,7 @@ class AstarVideo(MovingCameraScene):
             ),
         )
 
+        # Zoom out and add it into the list
         self.play(Restore(camera), run_time=2)
         self.play(
             element_s_group.animate.scale(1.5).move_to(
@@ -751,6 +767,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Create the Label of Point A and animate it
         self.play(
             self.camera.frame.animate.scale(0.3).move_to(
                 group_sa.get_center() + 1 * UP
@@ -788,6 +805,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Zoom out and add it into the list
         self.play(Restore(camera), run_time=2)
         self.play(
             element_a_group.animate.scale(1.5).move_to(
@@ -797,6 +815,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Create the Label of Point B and animate it
         self.play(
             self.camera.frame.animate.scale(0.3).move_to(
                 group_sb.get_center() + 1 * RIGHT
@@ -834,6 +853,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Zoom out and add it into the list
         self.play(Restore(camera), run_time=2)
         self.play(
             element_a_group.animate.move_to(list_outline.get_center() + 1.25 * UP),
@@ -844,6 +864,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Create the Label of Point C and animate it
         self.play(
             self.camera.frame.animate.scale(0.3).move_to(
                 group_sc.get_center() + 1 * UP
@@ -881,6 +902,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Zoom out and add it into the list
         self.play(Restore(camera), run_time=2)
         self.play(
             element_a_group.animate.move_to(list_outline.get_center() + 0.5 * DOWN),
@@ -891,6 +913,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Create the Done List and add Label of Point A and animate the transitions
         self.play(Restore(camera), run_time=2)
         self.play(self.camera.frame.animate.move_to(15 * RIGHT), run_time=2)
 
@@ -905,6 +928,8 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+
+        # Create the new Label of Point A and animate the replacement of the old one
         self.play(Restore(camera), run_time=2)
 
         self.play(
@@ -963,6 +988,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Create the Label of Point D and animate it
         self.play(
             self.camera.frame.animate.scale(0.4).move_to(
                 group_sbd.get_center() + 0.9 * DOWN + 1 * RIGHT
@@ -1002,6 +1028,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Zoom out and add it into the list
         self.play(Restore(camera), run_time=2)
         self.play(
             element_d_group.animate.scale(1.5).move_to(
@@ -1011,6 +1038,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Create the Label of Point H and animate it
         self.play(
             self.camera.frame.animate.scale(0.4).move_to(
                 group_sbh.get_center() + 0.9 * DOWN + 3 * RIGHT
@@ -1050,6 +1078,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Zoom out, add it into the list and move Label of Point B to the Done List
         self.play(Restore(camera), run_time=2)
         self.play(
             element_h_group.animate.scale(1.5).move_to(
@@ -1072,6 +1101,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Create the Label of Point F and animate it
         self.play(Restore(camera), run_time=2)
         self.play(
             self.camera.frame.animate.scale(0.45).move_to(
@@ -1112,6 +1142,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Zoom out and add it into the list
         self.play(Restore(camera), run_time=2)
         self.play(
             element_f_group.animate.scale(1.5).move_to(
@@ -1123,6 +1154,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Create the Label of Point G and animate it
         self.play(
             self.camera.frame.animate.scale(0.5).move_to(group_sbhg.get_center()),
             run_time=2,
@@ -1160,6 +1192,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Zoom out, add it into the list and move Label of Point H to the Done List
         self.play(Restore(camera), run_time=2)
         self.play(
             element_g_group.animate.scale(1.5).move_to(
@@ -1187,6 +1220,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Create the Label of Point E and animate it
         self.play(Restore(camera), run_time=2)
         self.play(
             self.camera.frame.animate.scale(0.55).move_to(
@@ -1227,6 +1261,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # Zoom out, add it into the list and move Label of Point G to the Done List
         self.play(Restore(camera), run_time=2)
         self.play(
             element_e_group.animate.scale(1.5).move_to(
@@ -1254,6 +1289,7 @@ class AstarVideo(MovingCameraScene):
             run_time=2,
         )
 
+        # Move Label of Point E to the Done List
         self.play(Restore(camera), run_time=2)
         self.wait(2)
         self.play(self.camera.frame.animate.move_to(15 * RIGHT), run_time=2)
@@ -1262,6 +1298,7 @@ class AstarVideo(MovingCameraScene):
             run_time=2,
         )
 
+        # Let the rest of the open list disappear
         self.play(
             FadeOut(list_outline),
             FadeOut(list_title),
@@ -1272,6 +1309,8 @@ class AstarVideo(MovingCameraScene):
             FadeOut(focus_line),
             run_time=2,
         )
+
+        # iterate backwards through the done list and create the final path
         self.play(
             element_e_group.animate.move_to(list_outline.get_center() + 5 * UP),
             run_time=2,
@@ -1294,6 +1333,7 @@ class AstarVideo(MovingCameraScene):
         )
         self.wait(2)
 
+        # switch the elements to the right order
         self.play(
             element_s_group.animate.move_to(list_outline.get_center() + 5 * UP),
             element_b_group.animate.move_to(list_outline.get_center() + 3.25 * UP),
@@ -1303,6 +1343,7 @@ class AstarVideo(MovingCameraScene):
             run_time=2,
         )
 
+        # Zoom into the graph and move the final path labels to the center
         self.play(
             self.camera.frame.animate.scale(1 / 1.75).move_to(
                 group_complete_graph.get_center()
@@ -1313,6 +1354,7 @@ class AstarVideo(MovingCameraScene):
             run_time=2,
         )
 
+        # Highlight the final path
         self.play(FadeOut(group_not_path), run_time=2)
 
         self.wait(10)
