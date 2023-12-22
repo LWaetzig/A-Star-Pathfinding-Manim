@@ -146,6 +146,34 @@ class AstarVideo(MovingCameraScene):
         group_explain_heuristics = VGroup(heuristic_i, heuristic_j, heuristic_k, heuristic_l, heuristic_e)
         group_other_heuristics = VGroup(heuristic_s, heuristic_a, heuristic_b, heuristic_c, heuristic_d, heuristic_f, heuristic_g, heuristic_h)
 
+        group_complete_graph = VGroup(group_start, group_end, group_other_points, group_other_letters, group_lines)
+
+        group_not_path = VGroup(
+            line_sa, weight_sa,
+            line_sc, weight_sc,
+            line_ab, weight_ab, heuristic_a,
+            line_ad, weight_ad, heuristic_d,
+            line_bd, weight_bd,
+            line_df, weight_df, heuristic_f,
+            line_hf, weight_hf,
+            line_sc, weight_sc, heuristic_c,
+            line_cl, weight_cl, heuristic_l,
+            line_li, weight_li, heuristic_i,
+            line_lj, weight_lj, heuristic_j,
+            line_ij, weight_ij,
+            line_ik, weight_ik, heuristic_k,
+            line_jk, weight_jk,
+            line_ke, weight_ke,
+            point_a, letter_a,
+            point_d, letter_d,
+            point_f, letter_f,
+            point_c, letter_c,
+            point_l, letter_l,
+            point_i, letter_i,
+            point_j, letter_j,
+            point_k, letter_k
+        )
+
         group_sa = VGroup(point_s, point_a)
         group_sb = VGroup(point_s, point_b)
         group_sc = VGroup(point_s, point_c)
@@ -154,6 +182,7 @@ class AstarVideo(MovingCameraScene):
         group_sbh = VGroup(group_sb, point_h)
         group_sbhf = VGroup(group_sbh, point_f)
         group_sbhg = VGroup(group_sbh, point_g)
+        group_sbhge = VGroup(group_sbhg, point_e)
 
 
         # Create list elements
@@ -199,6 +228,10 @@ class AstarVideo(MovingCameraScene):
 
         element_g_group, element_g_via_text, element_g_went_num, element_g_togo_num = self.create_list_element(
             group_sbhg.get_center() + 1 * DOWN + 1.5 * RIGHT, "G", "-", "-", "-"
+        )
+
+        element_e_group, element_e_via_text, element_e_went_num, element_e_togo_num = self.create_list_element(
+            group_sbhge.get_center() + 1 * DOWN + 1.5 * RIGHT, "E", "-", "-", "-"
         )
 
         
@@ -252,8 +285,14 @@ class AstarVideo(MovingCameraScene):
         animation_group_heur_g = VGroup(element_g_togo_num, heuristic_g.copy())
         element_g_group.add(animation_group_via_gh, animation_group_went_gh, animation_group_heur_g)
         animation_went_ghbs_copy = Text("5", color=GREEN).scale(0.75).move_to(element_g_went_num.get_center())
-        
 
+        animation_group_via_eg = VGroup(element_e_via_text, letter_g.copy())
+        animation_group_went_eg = VGroup(element_e_went_num, weight_ge.copy(), weight_hg.copy(), weight_bh.copy(), weight_sb.copy())
+        animation_group_heur_e = VGroup(element_e_togo_num, heuristic_e.copy())
+        element_e_group.add(animation_group_via_eg, animation_group_went_eg, animation_group_heur_e)
+        animation_went_eghbs_copy = Text("7", color=GREEN).scale(0.75).move_to(element_e_went_num.get_center())
+        
+        group_final_path = VGroup(element_s_group, element_b_group, element_h_group, element_g_group, element_e_group)
 
 
 
@@ -449,6 +488,73 @@ class AstarVideo(MovingCameraScene):
         self.play(self.camera.frame.animate.move_to(15 * RIGHT), run_time=2)
         self.play(element_h_group.animate.move_to(path_list_outline.get_center() + 1.5 * UP), element_g_group.animate.move_to(list_outline.get_center() + 5 * UP), element_c_group.animate.move_to(list_outline.get_center() + 3 * UP), element_f_group.animate.move_to(list_outline.get_center() + 1.25 * UP), new_element_a_group.animate.move_to(list_outline.get_center() + 0.5 * DOWN), element_d_group.animate.move_to(list_outline.get_center() + 2.25 * DOWN),run_time=2)
         self.wait(2)
+
+        self.play(Restore(camera), run_time=2)
+        self.play(self.camera.frame.animate.scale(0.55).move_to(group_sbhge.get_center() + 1 * RIGHT), run_time=2)
+
+        self.play(Create(element_e_group), run_time=2)
+        element_e_via_text.set_text("G")
+        self.play(ReplacementTransform(animation_group_via_eg, Text("G").scale(0.75).move_to(element_e_via_text.get_center())), run_time=1.5)
+        element_e_went_num.set_text("7")
+        self.play(ReplacementTransform(animation_group_went_eg, Text("7", color=GREEN).scale(0.75).move_to(element_e_went_num.get_center())), run_time=1.5)
+        animation_group_heur_e.add(animation_went_eghbs_copy)
+        element_e_togo_num.set_text("7")
+        self.play(ReplacementTransform(animation_group_heur_e, Text("7", color=RED).scale(0.75).move_to(element_e_togo_num.get_center())), run_time=2)
+        self.wait(2)
+
+        self.play(Restore(camera), run_time=2)
+        self.play(
+            element_e_group.animate.scale(1.5).move_to(list_outline.get_center() + 3 * UP),
+            element_c_group.animate.move_to(list_outline.get_center() + 1.25 * UP),
+            element_f_group.animate.move_to(list_outline.get_center() + 0.5 * DOWN),
+            new_element_a_group.animate.move_to(list_outline.get_center() + 2.25 * DOWN),
+            element_d_group.animate.move_to(list_outline.get_center() + 4 * DOWN),
+            run_time=2
+        )
+
+        self.play(self.camera.frame.animate.move_to(15 * RIGHT), run_time=2)
+        self.play(
+            element_g_group.animate.move_to(path_list_outline.get_center() + 0.25 * DOWN),
+            element_e_group.animate.move_to(list_outline.get_center() + 5 * UP),
+            element_c_group.animate.move_to(list_outline.get_center() + 3 * UP),
+            element_f_group.animate.move_to(list_outline.get_center() + 1.25 * UP),
+            new_element_a_group.animate.move_to(list_outline.get_center() + 0.5 * DOWN),
+            element_d_group.animate.move_to(list_outline.get_center() + 2.25 * DOWN),
+            run_time=2
+        )
+
+        self.play(Restore(camera), run_time=2)
+        self.wait(2)
+        self.play(self.camera.frame.animate.move_to(15 * RIGHT), run_time=2)
+        self.play(
+            element_e_group.animate.move_to(path_list_outline.get_center() + 2 * DOWN),
+            run_time=2
+        )
+
+        self.play(FadeOut(list_outline), FadeOut(list_title), FadeOut(element_c_group), FadeOut(element_f_group), FadeOut(new_element_a_group), FadeOut(element_d_group), FadeOut(focus_line), run_time=2)
+        self.play(element_e_group.animate.move_to(list_outline.get_center() + 5 * UP), run_time=2)
+        self.play(element_g_group.animate.move_to(list_outline.get_center() + 3.25 * UP), run_time=2)
+        self.play(element_h_group.animate.move_to(list_outline.get_center() + 1.5 * UP), run_time=2)
+        self.play(element_b_group.animate.move_to(list_outline.get_center() + 0.25 * DOWN), run_time=2)
+        self.play(element_s_group.animate.move_to(list_outline.get_center() + 2 * DOWN), run_time=2)
+        self.wait(2)
+
+        self.play(
+            element_s_group.animate.move_to(list_outline.get_center() + 5 * UP),
+            element_b_group.animate.move_to(list_outline.get_center() + 3.25 * UP),
+            element_h_group.animate.move_to(list_outline.get_center() + 1.5 * UP),
+            element_g_group.animate.move_to(list_outline.get_center() + 0.25 * DOWN),
+            element_e_group.animate.move_to(list_outline.get_center() + 2 * DOWN),
+            run_time=2
+        )
+
+        self.play(
+            self.camera.frame.animate.scale(1/1.75).move_to(group_complete_graph.get_center()),
+            group_final_path.animate.scale(0.5).move_to(group_complete_graph.get_center()),
+            run_time=2
+        )
+
+        self.play(FadeOut(group_not_path), run_time=2)
 
 
 
