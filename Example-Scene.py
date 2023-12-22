@@ -3,7 +3,6 @@ import numpy as np
 
 
 class AstarVideo(MovingCameraScene):
-
     # Function to adjust the line to the boundary of the circle
     def adjust_line_to_circle_boundary(self, start_point, end_point):
         line_vector = end_point.get_center() - start_point.get_center()
@@ -350,7 +349,7 @@ class AstarVideo(MovingCameraScene):
         group_explain_weights = VGroup(
             weight_li, weight_lj, weight_ij, weight_ik, weight_jk, weight_ke
         )
-        
+
         group_other_weights = VGroup(
             weight_sa,
             weight_sb,
@@ -363,6 +362,18 @@ class AstarVideo(MovingCameraScene):
             weight_hf,
             weight_hg,
             weight_ge,
+            weight_cl,
+        )
+
+        group_not_final_path_weights = VGroup(
+            group_explain_weights,
+            weight_sa,
+            weight_ab,
+            weight_sc,
+            weight_ad,
+            weight_bd,
+            weight_df,
+            weight_hf,
             weight_cl,
         )
 
@@ -381,65 +392,27 @@ class AstarVideo(MovingCameraScene):
             heuristic_h,
         )
 
+        group_heuristics = VGroup(group_other_heuristics, group_explain_heuristics)
+
         group_complete_graph = VGroup(
             group_start, group_end, group_other_points, group_other_letters, group_lines
         )
 
-        group_not_path = VGroup(
-            line_sa,
-            weight_sa,
-            line_sc,
-            weight_sc,
-            line_ab,
-            weight_ab,
-            heuristic_a,
-            line_ad,
-            weight_ad,
-            heuristic_d,
-            line_bd,
-            weight_bd,
-            line_df,
-            weight_df,
-            heuristic_f,
-            line_hf,
-            weight_hf,
-            line_sc,
-            weight_sc,
-            heuristic_c,
-            line_cl,
-            weight_cl,
-            heuristic_l,
-            line_li,
-            weight_li,
-            heuristic_i,
-            line_lj,
-            weight_lj,
-            heuristic_j,
-            line_ij,
-            weight_ij,
-            line_ik,
-            weight_ik,
-            heuristic_k,
-            line_jk,
-            weight_jk,
-            line_ke,
-            weight_ke,
-            point_a,
-            letter_a,
-            point_d,
-            letter_d,
-            point_f,
-            letter_f,
-            point_c,
-            letter_c,
-            point_l,
-            letter_l,
-            point_i,
-            letter_i,
-            point_j,
-            letter_j,
-            point_k,
-            letter_k,
+        group_final_path = VGroup(
+            point_s,
+            letter_s,
+            point_b,
+            letter_b,
+            point_h,
+            letter_h,
+            point_g,
+            letter_g,
+            point_e,
+            letter_e,
+            line_sb,
+            line_bh,
+            line_hg,
+            line_ge,
         )
 
         # Groups for the expanding of the list
@@ -675,7 +648,7 @@ class AstarVideo(MovingCameraScene):
             Text("7", color=GREEN).scale(0.75).move_to(element_e_went_num.get_center())
         )
 
-        group_final_path = VGroup(
+        group_final_path_labels = VGroup(
             element_s_group,
             element_b_group,
             element_h_group,
@@ -704,7 +677,7 @@ class AstarVideo(MovingCameraScene):
         self.play(Create(group_lines))
         self.wait(2)
 
-        # Zoom to a Group of ponts to explain the weights and heuristics
+        # Zoom to a Group of points to explain the weights and heuristics
         self.play(
             self.camera.frame.animate.scale(0.8).move_to(group_explain.get_center()),
             run_time=2,
@@ -720,9 +693,9 @@ class AstarVideo(MovingCameraScene):
         self.play(Restore(camera), run_time=2)
         self.wait(2)
 
-        self.play(Write(group_other_weights))
+        self.play(Write(group_other_weights), run_time=2)
         self.wait(1)
-        self.play(Write(group_other_heuristics))
+        self.play(Write(group_other_heuristics), run_time=2)
         self.wait(2)
 
         # Zoom out of the graph and create the open list
@@ -927,7 +900,6 @@ class AstarVideo(MovingCameraScene):
             run_time=2,
         )
         self.wait(2)
-
 
         # Create the new Label of Point A and animate the replacement of the old one
         self.play(Restore(camera), run_time=2)
@@ -1348,13 +1320,19 @@ class AstarVideo(MovingCameraScene):
             self.camera.frame.animate.scale(1 / 1.75).move_to(
                 group_complete_graph.get_center()
             ),
-            group_final_path.animate.scale(0.5).move_to(
+            group_final_path_labels.animate.scale(0.5).move_to(
                 group_complete_graph.get_center()
             ),
             run_time=2,
         )
 
         # Highlight the final path
-        self.play(FadeOut(group_not_path), run_time=2)
+        self.play(
+            FadeOut(group_heuristics), FadeOut(group_not_final_path_weights), run_time=2
+        )
+        self.play(
+            group_final_path.animate.set_color(GREEN),
+            run_time=2,
+        )
 
         self.wait(10)
