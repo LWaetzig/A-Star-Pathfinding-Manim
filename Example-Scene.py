@@ -657,41 +657,42 @@ class AstarVideo(MovingCameraScene):
         )
 
         # Start with the Video-timeline
-
+        
         # Create the title
-        self.play(Write(title))
+        self.play(Write(title), run_time=1.5)
         self.play(FadeOut(title, run_time=1.5))
-        self.wait(1)
+        self.wait(2)
 
         # Create the text for the start and end point and morph them into the points
         camera = self.camera.frame.save_state()
-        self.play(Write(start_text), Write(end_text))
-        self.wait(2)
+        self.play(Write(start_text), Write(end_text), run_time=2)
         self.play(
             ReplacementTransform(start_text, group_start),
             ReplacementTransform(end_text, group_end),
-        )
+        run_time=2)
+        self.wait(2)
 
         # Create the whole graph
         self.play(Create(group_other_points), Write(group_other_letters), run_time=2)
-        self.play(Create(group_lines))
+        self.wait(2)
+        self.play(Create(group_lines), run_time=2)
         self.wait(2)
 
         # Zoom to a Group of points to explain the weights and heuristics
         self.play(
             self.camera.frame.animate.scale(0.8).move_to(group_explain.get_center()),
-            run_time=2,
+            run_time=3,
         )
-        self.wait(2)
+        self.wait(3)
 
-        self.play(Write(group_explain_weights))
-        self.wait(2)
-        self.play(Write(group_explain_heuristics))
-        self.wait(2)
+        self.play(Write(group_explain_weights), run_time=2)
+        self.wait(7)
+        self.play(Write(group_explain_heuristics), run_time=2)
+        self.wait(8)
 
         # Zoom out again and show the other weights and heuristics
         self.play(Restore(camera), run_time=2)
-        self.wait(2)
+        self.wait(1)
 
         self.play(Write(group_other_weights), run_time=2)
         self.wait(1)
@@ -702,7 +703,7 @@ class AstarVideo(MovingCameraScene):
         self.play(self.camera.frame.animate.scale(1.75).move_to(5 * RIGHT), run_time=3)
         camera = self.camera.frame.save_state()
 
-        self.play(Write(list_title), Create(list_outline))
+        self.play(Write(list_title), Create(list_outline), run_time=2)
 
         # Create the label of Point S, the first element of the open list and animate it
         self.play(
@@ -712,8 +713,9 @@ class AstarVideo(MovingCameraScene):
             run_time=2,
         )
         self.play(Create(element_s_group), run_time=2)
+        self.wait(8)
         element_s_went_num.set_text("0")
-        element_s_togo_num.set_text("10")
+        self.wait(5)
         self.play(
             ReplacementTransform(
                 element_s_went_num,
@@ -721,12 +723,18 @@ class AstarVideo(MovingCameraScene):
                 .scale(0.75)
                 .move_to(element_s_went_num.get_center()),
             ),
+            run_time=2,
+        )
+        self.wait(7)
+        element_s_togo_num.set_text("10")
+        self.play(
             ReplacementTransform(
                 animation_group_heur_s,
                 Text("10", color=RED)
                 .scale(0.75)
                 .move_to(element_s_togo_num.get_center()),
             ),
+            run_time=2
         )
 
         # Zoom out and add it into the list
@@ -738,8 +746,8 @@ class AstarVideo(MovingCameraScene):
             Create(focus_line),
             run_time=2,
         )
-        self.wait(2)
-
+        self.wait(8.5)
+        
         # Create the Label of Point A and animate it
         self.play(
             self.camera.frame.animate.scale(0.3).move_to(
@@ -748,6 +756,7 @@ class AstarVideo(MovingCameraScene):
             run_time=2,
         )
         self.play(Create(element_a_group), run_time=2)
+        self.wait(2)
         element_a_via_text.set_text("S")
         self.play(
             ReplacementTransform(
@@ -756,6 +765,7 @@ class AstarVideo(MovingCameraScene):
             ),
             run_time=1.5,
         )
+        self.wait(4)
         element_a_went_num.set_text("7")
         self.play(
             ReplacementTransform(
@@ -764,8 +774,9 @@ class AstarVideo(MovingCameraScene):
                 .scale(0.75)
                 .move_to(element_a_went_num.get_center()),
             ),
-            run_time=1.5,
+            run_time=2,
         )
+        self.wait(16)
         element_a_togo_num.set_text("16")
         self.play(
             ReplacementTransform(
@@ -776,7 +787,7 @@ class AstarVideo(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(4)
 
         # Zoom out and add it into the list
         self.play(Restore(camera), run_time=2)
@@ -786,7 +797,7 @@ class AstarVideo(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(5.5)
 
         # Create the Label of Point B and animate it
         self.play(
@@ -795,6 +806,7 @@ class AstarVideo(MovingCameraScene):
             ),
             run_time=2,
         )
+        self.wait(2)
         self.play(Create(element_b_group), run_time=2)
         element_b_via_text.set_text("S")
         self.play(
@@ -804,6 +816,7 @@ class AstarVideo(MovingCameraScene):
             ),
             run_time=1.5,
         )
+        self.wait(2)
         element_b_went_num.set_text("2")
         self.play(
             ReplacementTransform(
@@ -812,8 +825,9 @@ class AstarVideo(MovingCameraScene):
                 .scale(0.75)
                 .move_to(element_b_went_num.get_center()),
             ),
-            run_time=1.5,
+            run_time=2,
         )
+        self.wait(10)
         element_b_togo_num.set_text("9")
         self.play(
             ReplacementTransform(
@@ -824,10 +838,11 @@ class AstarVideo(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(2.5)
 
         # Zoom out and add it into the list
         self.play(Restore(camera), run_time=2)
+        self.wait(7)
         self.play(
             element_a_group.animate.move_to(list_outline.get_center() + 1.25 * UP),
             element_b_group.animate.scale(1.5).move_to(
@@ -835,7 +850,7 @@ class AstarVideo(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(4.5)
 
         # Create the Label of Point C and animate it
         self.play(
@@ -873,7 +888,7 @@ class AstarVideo(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(4)
 
         # Zoom out and add it into the list
         self.play(Restore(camera), run_time=2)
@@ -884,14 +899,14 @@ class AstarVideo(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(4)
 
         # Create the Done List and add Label of Point A and animate the transitions
         self.play(Restore(camera), run_time=2)
         self.play(self.camera.frame.animate.move_to(15 * RIGHT), run_time=2)
 
-        self.play(Write(path_list_title), Create(path_list_outline))
-        self.wait(2)
+        self.play(Write(path_list_title), Create(path_list_outline), run_time=2)
+        self.wait(5)
         self.play(
             element_s_group.animate.move_to(path_list_outline.get_center() + 5 * UP),
             element_b_group.animate.move_to(list_outline.get_center() + 5 * UP),
@@ -899,10 +914,11 @@ class AstarVideo(MovingCameraScene):
             element_a_group.animate.move_to(list_outline.get_center() + 1.25 * UP),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(4)
 
         # Create the new Label of Point A and animate the replacement of the old one
         self.play(Restore(camera), run_time=2)
+        self.wait(3)
 
         self.play(
             self.camera.frame.animate.scale(0.3).move_to(
@@ -910,23 +926,26 @@ class AstarVideo(MovingCameraScene):
             ),
             run_time=2,
         )
+        self.wait(4.5)
         self.play(
             element_a_group.animate.scale(1 / 1.5).move_to(
                 group_sba.get_center() + 2.3 * UP
             ),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(1)
 
         self.play(Create(new_element_a_group), run_time=2)
+        self.wait(2)
         new_element_a_via_text.set_text("B")
         self.play(
             ReplacementTransform(
                 animation_group_new_via_abs,
                 Text("B").scale(0.75).move_to(new_element_a_via_text.get_center()),
             ),
-            run_time=1.5,
+            run_time=2,
         )
+        self.wait(5)
         new_element_a_went_num.set_text("5")
         self.play(
             ReplacementTransform(
@@ -935,8 +954,9 @@ class AstarVideo(MovingCameraScene):
                 .scale(0.75)
                 .move_to(new_element_a_went_num.get_center()),
             ),
-            run_time=1.5,
+            run_time=2,
         )
+        self.wait(8)
         animation_group_new_heur_a.add(animation_new_went_abs_copy)
         new_element_a_togo_num.set_text("14")
         self.play(
@@ -948,7 +968,7 @@ class AstarVideo(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(5)
 
         self.play(FadeOut(element_a_group), run_time=2)
         self.play(Restore(camera), run_time=2)
@@ -1049,7 +1069,7 @@ class AstarVideo(MovingCameraScene):
             run_time=2,
         )
         self.wait(2)
-
+        # 5:05:50
         # Zoom out, add it into the list and move Label of Point B to the Done List
         self.play(Restore(camera), run_time=2)
         self.play(
@@ -1061,7 +1081,7 @@ class AstarVideo(MovingCameraScene):
             element_d_group.animate.move_to(list_outline.get_center() + 2.25 * DOWN),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(3.5)
         self.play(self.camera.frame.animate.move_to(15 * RIGHT), run_time=2)
         self.play(
             element_b_group.animate.move_to(path_list_outline.get_center() + 3.25 * UP),
@@ -1071,7 +1091,7 @@ class AstarVideo(MovingCameraScene):
             element_d_group.animate.move_to(list_outline.get_center() + 0.5 * DOWN),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(4)
 
         # Create the Label of Point F and animate it
         self.play(Restore(camera), run_time=2)
@@ -1194,6 +1214,7 @@ class AstarVideo(MovingCameraScene):
 
         # Create the Label of Point E and animate it
         self.play(Restore(camera), run_time=2)
+        self.wait(2)
         self.play(
             self.camera.frame.animate.scale(0.55).move_to(
                 group_sbhge.get_center() + 1 * RIGHT
@@ -1202,13 +1223,14 @@ class AstarVideo(MovingCameraScene):
         )
 
         self.play(Create(element_e_group), run_time=2)
+        self.wait(5)
         element_e_via_text.set_text("G")
         self.play(
             ReplacementTransform(
                 animation_group_via_eg,
                 Text("G").scale(0.75).move_to(element_e_via_text.get_center()),
             ),
-            run_time=1.5,
+            run_time=2,
         )
         element_e_went_num.set_text("7")
         self.play(
@@ -1247,6 +1269,7 @@ class AstarVideo(MovingCameraScene):
             element_d_group.animate.move_to(list_outline.get_center() + 4 * DOWN),
             run_time=2,
         )
+        self.wait(2)
 
         self.play(self.camera.frame.animate.move_to(15 * RIGHT), run_time=2)
         self.play(
@@ -1269,6 +1292,8 @@ class AstarVideo(MovingCameraScene):
             element_e_group.animate.move_to(path_list_outline.get_center() + 2 * DOWN),
             run_time=2,
         )
+
+        self.wait(3)
 
         # Let the rest of the open list disappear
         self.play(
@@ -1303,7 +1328,7 @@ class AstarVideo(MovingCameraScene):
             element_s_group.animate.move_to(list_outline.get_center() + 2 * DOWN),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(18.5)
 
         # switch the elements to the right order
         self.play(
@@ -1314,6 +1339,8 @@ class AstarVideo(MovingCameraScene):
             element_e_group.animate.move_to(list_outline.get_center() + 2 * DOWN),
             run_time=2,
         )
+
+        self.wait(5)
 
         # Zoom into the graph and move the final path labels to the center
         self.play(
@@ -1331,8 +1358,34 @@ class AstarVideo(MovingCameraScene):
             FadeOut(group_heuristics), FadeOut(group_not_final_path_weights), run_time=2
         )
         self.play(
-            group_final_path.animate.set_color(GREEN),
+            point_s.animate.set_color(GREEN),
+            letter_s.animate.set_color(GREEN),
+            run_time=2,
+        )
+        self.play(
+            point_b.animate.set_color(GREEN),
+            letter_b.animate.set_color(GREEN),
+            line_sb.animate.set_color(GREEN),
+            run_time=2,
+        )
+        self.play(
+            point_h.animate.set_color(GREEN),
+            letter_h.animate.set_color(GREEN),
+            line_bh.animate.set_color(GREEN),
+            run_time=2,
+        )
+        self.play(
+            point_g.animate.set_color(GREEN),
+            letter_g.animate.set_color(GREEN),
+            line_hg.animate.set_color(GREEN),
+            run_time=2,
+        )
+        self.wait(1)
+        self.play(
+            point_e.animate.set_color(GREEN),
+            letter_e.animate.set_color(GREEN),
+            line_ge.animate.set_color(GREEN),
             run_time=2,
         )
 
-        self.wait(10)
+        self.wait(8)
