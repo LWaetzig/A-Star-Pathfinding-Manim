@@ -143,13 +143,13 @@ class AStar(Scene):
         self.play(arr_pf.animate.shift(UP * 1).scale(1.5))
         self.wait(1)
         entf = ImageMobject(
-            r"\Users\alexp\OneDrive\Studium\5_Semester\Integrationsseminar\Entfernung.png"
+            r"data\Entfernung.png"
         ).scale(1)
         zeit = ImageMobject(
-            r"\Users\alexp\OneDrive\Studium\5_Semester\Integrationsseminar\Zeit.png"
+            r"data\Ressourcen.png"
         ).scale(0.8)
         res = ImageMobject(
-            r"\Users\alexp\OneDrive\Studium\5_Semester\Integrationsseminar\Ressourcen.png"
+            r"data\Ressourcen.png"
         ).scale(0.8)
         self.play(FadeIn(entf.next_to(arr_pf, UP).shift(LEFT * 3)), run_time=0.5)
         self.play(FadeIn(zeit.next_to(arr_pf, UP)), run_time=0.5)
