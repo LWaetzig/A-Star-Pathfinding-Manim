@@ -1,10 +1,19 @@
-from manim import *
 import numpy as np
+from manim import *
 
 
 class ExampleScene(MovingCameraScene):
-    # Function to adjust the line to the boundary of the circle
-    def adjust_line_to_circle_boundary(self, start_point, end_point):
+    @staticmethod
+    def adjust_line_to_circle_boundary(start_point, end_point):
+        """Adjust a line to end on the boundary of a circle
+
+        Args:
+            start_point (list): Location where the line should start
+            end_point (list): Location where the line should end
+
+        Returns:
+            Line: Line element adjusted to the boundary of the circle
+        """
         line_vector = end_point.get_center() - start_point.get_center()
         normalized_vector = line_vector / np.linalg.norm(line_vector)
         adjusted_start = start_point.get_center() + 0.25 * normalized_vector
@@ -12,8 +21,17 @@ class ExampleScene(MovingCameraScene):
 
         return Line(adjusted_start, adjusted_end)
 
-    # Function to create a point with a centered label
-    def create_point(self, center, label):
+    @staticmethod
+    def create_point(center, label: str):
+        """Create node with label
+
+        Args:
+            center (list): location of the node
+            label (_type_): label displayed in the node
+
+        Returns:
+            tuple: _description_
+        """
         circle = Circle(radius=0.25, color=BLUE, fill_opacity=0.5)
         letter = Text(label, color=WHITE).scale(0.5)
         circle.move_to(center)
@@ -21,8 +39,22 @@ class ExampleScene(MovingCameraScene):
 
         return circle, letter
 
-    # Function to create a list element
-    def create_list_element(self, position, label, via_text, went_num, togo_num):
+    @staticmethod
+    def create_list_element(
+        position, label: str, via_text: str, went_num: str, togo_num: str
+    ):
+        """Create single list element
+
+        Args:
+            position (list): Position of the element
+            label (str): Label corresponding to a node
+            via_text (str): Label of the node from which the current node was reached
+            went_num (str): Weight of the path from the start node to the current node
+            togo_num (str): Weight of the path from the current node to the end node
+
+        Returns:
+            tuple: Element as a group
+        """
         element = RoundedRectangle(
             width=4, height=1, corner_radius=0.25, color=BLUE
         ).move_to(position)
@@ -398,23 +430,6 @@ class ExampleScene(MovingCameraScene):
             group_start, group_end, group_other_points, group_other_letters, group_lines
         )
 
-        group_final_path = VGroup(
-            point_s,
-            letter_s,
-            point_b,
-            letter_b,
-            point_h,
-            letter_h,
-            point_g,
-            letter_g,
-            point_e,
-            letter_e,
-            line_sb,
-            line_bh,
-            line_hg,
-            line_ge,
-        )
-
         # Groups for the expanding of the list
         group_sa = VGroup(point_s, point_a)
         group_sb = VGroup(point_s, point_b)
@@ -426,7 +441,7 @@ class ExampleScene(MovingCameraScene):
         group_sbhg = VGroup(group_sbh, point_g)
         group_sbhge = VGroup(group_sbhg, point_e)
 
-        # Create the different list elements (Labels of the points) and the list
+        # Create list and necessary elements (Labels, Lines, etc.)
         list_outline = RoundedRectangle(
             width=7, height=12, corner_radius=0.25, color=BLUE
         ).move_to(12 * RIGHT + 0.5 * DOWN)
@@ -537,7 +552,7 @@ class ExampleScene(MovingCameraScene):
             group_sbhge.get_center() + 1 * DOWN + 1.5 * RIGHT, "E", "-", "-", "-"
         )
 
-        # create some Groups and Elements for animation purposes
+        # Create some Groups and Elements for animation purposes
         animation_group_heur_s = VGroup(element_s_togo_num, heuristic_s.copy())
         element_s_group.add(animation_group_heur_s)
 
@@ -656,7 +671,9 @@ class ExampleScene(MovingCameraScene):
             element_e_group,
         )
 
-        # Start with the Video-timeline
+        ###############################
+        # Start with the video timeline
+        ###############################
 
         # Create the title
         self.play(Write(title), run_time=1.5)
