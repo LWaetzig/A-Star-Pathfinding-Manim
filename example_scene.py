@@ -2,7 +2,7 @@ from manim import *
 import numpy as np
 
 
-class AstarVideo(MovingCameraScene):
+class ExampleScene(MovingCameraScene):
     # Function to adjust the line to the boundary of the circle
     def adjust_line_to_circle_boundary(self, start_point, end_point):
         line_vector = end_point.get_center() - start_point.get_center()
@@ -96,7 +96,7 @@ class AstarVideo(MovingCameraScene):
         title = Text("Example").scale(1.5)
 
         start_text = Text("Start").scale(1).to_edge(UP)
-        end_text = Text("Ende").scale(1).to_edge(DOWN)
+        end_text = Text("End").scale(1).to_edge(DOWN)
 
         # Create graph elements
         # Create points
@@ -657,7 +657,7 @@ class AstarVideo(MovingCameraScene):
         )
 
         # Start with the Video-timeline
-        
+
         # Create the title
         self.play(Write(title), run_time=1.5)
         self.play(FadeOut(title, run_time=1.5))
@@ -669,7 +669,8 @@ class AstarVideo(MovingCameraScene):
         self.play(
             ReplacementTransform(start_text, group_start),
             ReplacementTransform(end_text, group_end),
-        run_time=2)
+            run_time=2,
+        )
         self.wait(2)
 
         # Create the whole graph
@@ -734,7 +735,7 @@ class AstarVideo(MovingCameraScene):
                 .scale(0.75)
                 .move_to(element_s_togo_num.get_center()),
             ),
-            run_time=2
+            run_time=2,
         )
 
         # Zoom out and add it into the list
@@ -747,7 +748,7 @@ class AstarVideo(MovingCameraScene):
             run_time=2,
         )
         self.wait(8.5)
-        
+
         # Create the Label of Point A and animate it
         self.play(
             self.camera.frame.animate.scale(0.3).move_to(
