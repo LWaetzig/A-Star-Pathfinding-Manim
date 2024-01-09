@@ -13,7 +13,7 @@ class PathfindingScene(MovingCameraScene):
         self.wait(1)
         self.play(title.animate.scale(0.5).to_corner(UL))
         self.wait(1)
-        subtitle = Text("What is Pfadfindung?", font_size=50)
+        subtitle = Text("What is Pathfinding?", font_size=50)
         self.play(Write(subtitle))
         self.wait(2)
         text = Paragraph(
