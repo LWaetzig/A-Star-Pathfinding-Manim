@@ -1,5 +1,6 @@
-from manim import *
 import os
+
+from manim import *
 
 
 class Introduction(Scene):
@@ -38,9 +39,7 @@ class Introduction(Scene):
             font_size=24,
             font="Arial",
         ).to_edge(DOWN)
-        img = ImageMobject(
-            r"\Users\alexp\OneDrive\Studium\5_Semester\Integrationsseminar\Logo1.png"
-        ).scale_to_fit_width(8)
+        img = ImageMobject(os.path.join("data", "Logo1.png")).scale_to_fit_width(8)
 
         # Play the current subtitle
         self.wait(0.1)
@@ -142,15 +141,9 @@ class AStar(Scene):
         self.play(FadeOut(terms_group), FadeOut(euro), run_time=1)
         self.play(arr_pf.animate.shift(UP * 1).scale(1.5))
         self.wait(1)
-        entf = ImageMobject(
-            r"data\Entfernung.png"
-        ).scale(1)
-        zeit = ImageMobject(
-            r"data\Ressourcen.png"
-        ).scale(0.8)
-        res = ImageMobject(
-            r"data\Ressourcen.png"
-        ).scale(0.8)
+        entf = ImageMobject(os.path.join("data", "Entfernung.png")).scale(1)
+        zeit = ImageMobject(os.path.join("data", "Ressourcen.png")).scale(0.8)
+        res = ImageMobject(os.path.join("data", "Ressourcen.png")).scale(0.8)
         self.play(FadeIn(entf.next_to(arr_pf, UP).shift(LEFT * 3)), run_time=0.5)
         self.play(FadeIn(zeit.next_to(arr_pf, UP)), run_time=0.5)
         self.play(FadeIn(res.next_to(arr_pf, UP).shift(RIGHT * 3)), run_time=0.5)
