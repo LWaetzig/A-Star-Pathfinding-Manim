@@ -133,5 +133,9 @@ dmypy.json
 # exclude node mdoules
 node_modules
 
-# exclude build files
+# exclude manim media files
 media/**
+
+# exclude premiere pro files
+*.prproj
+Adobe Premiere Pro Auto-Save/**
