@@ -1,72 +1,12 @@
-from manim import *
 import os
 
-
-class Introduction(Scene):
-    def construct(self):
-        introduction_text = [
-            "Herzlich Willkommen bei AlgorithmAlchemy!",
-            "Heute tauchen wir in die faszinierende Welt des A* Algorithmus ein.",
-            "A* ist ein intelligenter Suchalgorithmus,",
-            "der in vielen Bereichen der künstlichen Intelligenz und Robotik eingesetzt wird.",
-            "Er hilft, den effizientesten Weg zwischen zwei Punkten in einem Netzwerk zu finden.",
-            "Lasst uns gemeinsam entdecken, wie dieser mächtige Algorithmus funktioniert!",
-        ]
-        satz1 = Text(
-            "Herzlich Willkommen bei AlgorithmAlchemy!", font_size=24, font="Arial"
-        ).to_edge(DOWN)
-        satz2 = Text(
-            "Heute tauchen wir in die faszinierende Welt des A* Algorithmus ein.",
-            font_size=24,
-            font="Arial",
-        ).to_edge(DOWN)
-        satz3 = Text(
-            "A* ist ein intelligenter Suchalgorithmus,", font_size=24, font="Arial"
-        ).to_edge(DOWN)
-        satz4 = Text(
-            "der in vielen Bereichen der künstlichen Intelligenz und Robotik eingesetzt wird.",
-            font_size=24,
-            font="Arial",
-        ).to_edge(DOWN)
-        satz5 = Text(
-            "Er hilft, den effizientesten Weg zwischen zwei Punkten in einem Netzwerk zu finden.",
-            font_size=24,
-            font="Arial",
-        ).to_edge(DOWN)
-        satz6 = Text(
-            "Lasst uns gemeinsam entdecken, wie dieser mächtige Algorithmus funktioniert!",
-            font_size=24,
-            font="Arial",
-        ).to_edge(DOWN)
-        img = ImageMobject(
-            r"\Users\alexp\OneDrive\Studium\5_Semester\Integrationsseminar\Logo1.png"
-        ).scale_to_fit_width(8)
-
-        # Play the current subtitle
-        self.wait(0.1)
-        self.play(Write(satz1, run_time=len(satz1) * 0.05), FadeIn(img))
-        self.wait(0.1)
-        self.play(FadeOut(satz1, run_time=1))
-        self.play(Write(satz2, run_time=len(satz2) * 0.05))
-        self.wait(0.1)
-        self.play(FadeOut(satz2, run_time=1))
-        self.play(Write(satz3, run_time=len(satz3) * 0.05))
-        self.play(FadeOut(satz3, run_time=0.05))
-        self.play(Write(satz4, run_time=len(satz4) * 0.05))
-        self.wait(0.1)
-        self.play(FadeOut(satz4, run_time=1))
-        self.play(Write(satz5, run_time=len(satz5) * 0.05))
-        self.wait(0.1)
-        self.play(FadeOut(satz5, run_time=1))
-        self.play(Write(satz6, run_time=len(satz6) * 0.05))
-        self.wait(0.1)
-        self.play(FadeOut(satz6, run_time=1), FadeOut(img))
+from manim import *
 
 
 class AStar(Scene):
     def construct(self):
         Text.set_default(font="Arial")
-        ##############################
+
         """
         Text / Inhalt
         Was ist der A Star Pathfinding Algorithmus überhaupt?
@@ -75,33 +15,30 @@ class AStar(Scene):
         Das Hauptziel des A* Algorithmus ist es, den Pfad mit der geringsten Kosten zwischen einem Startknoten und einem Zielpunkt zu finden. 
         Die Kosten können verschiedene Kriterien wie Entfernung, Zeit oder Ressourcenverbrauch sein.
         Im Gegensatz zu uninformierten Suchalgorithmen verwendet der A*-Algorithmus eine Schätzfunktion bzw. Heuristik, um zielgerichtet zu suchen und damit die Laufzeit zu verringern.
-        
         """
-        # erstelle zwei blaue punkte mit weißem rand und abstand zwischen den punkten
+
+        # create two blue dots with white border and distance between the dots
         p1 = Dot(color=BLUE, radius=0.4).shift(LEFT * 2)
         p2 = Dot(color=BLUE, radius=0.4).shift(RIGHT * 2)
-        # erstelle inen pfeil zwischen den punkten
         arrow = Arrow(p1.get_center(), p2.get_center(), buff=0.1)
-        # gruppiere die punkte und den pfeil
         arr_pf = VGroup(p1, p2, arrow)
 
         # Beschreibung des Algorithmus
-        # text_11 = Text("▪️ Berechnung des kürzesten Pfades zwischen \n     zwei Knoten in einem Graphen", font_size=23, font="Arial", line_spacing=1)
         text_1 = Text(
-            "▪️ Berechnung des kürzesten Pfades zwischen zwei Knoten in einem Graphen",
-            font_size=23,
+            "- calculating the shortest path between two nodes in a graph",
+            font_size=22,
             font="Arial",
             line_spacing=1,
         )
         text_2 = Text(
-            "▪️ wurde das erste Mal 1968 von Peter Hart, Nils J. Nilsson und Bertram Raphael beschrieben",
+            "- first described in 1968 by Peter Hart, Nils J. Nilsson and Bertram Raphael",
             font_size=22,
             font="Arial",
             line_spacing=1,
         )
         text_3 = Text(
-            "▪️ gilt als Verallgemeinerung und Erweiterung des Dijkstra-Algorithmus",
-            font_size=23,
+            "- is a generalization and extension of Dijkstra's algorithm",
+            font_size=22,
             font="Arial",
             line_spacing=1,
         )
@@ -124,6 +61,7 @@ class AStar(Scene):
         self.wait(1)
         self.play(arr_pf.animate.to_corner(UP + RIGHT).shift(DOWN * 1))
         self.wait(1)
+
         # spiele die gruppe nacheiander ab
         self.play(Write(terms_group[0]), run_time=1)
         self.wait(1)
@@ -142,15 +80,9 @@ class AStar(Scene):
         self.play(FadeOut(terms_group), FadeOut(euro), run_time=1)
         self.play(arr_pf.animate.shift(UP * 1).scale(1.5))
         self.wait(1)
-        entf = ImageMobject(
-            r"data\Entfernung.png"
-        ).scale(1)
-        zeit = ImageMobject(
-            r"data\Ressourcen.png"
-        ).scale(0.8)
-        res = ImageMobject(
-            r"data\Ressourcen.png"
-        ).scale(0.8)
+        entf = ImageMobject(os.path.join("data", "Entfernung.png")).scale(1)
+        zeit = ImageMobject(os.path.join("data", "Zeit.png")).scale(0.8)
+        res = ImageMobject(os.path.join("data", "Ressourcen.png")).scale(0.8)
         self.play(FadeIn(entf.next_to(arr_pf, UP).shift(LEFT * 3)), run_time=0.5)
         self.play(FadeIn(zeit.next_to(arr_pf, UP)), run_time=0.5)
         self.play(FadeIn(res.next_to(arr_pf, UP).shift(RIGHT * 3)), run_time=0.5)
