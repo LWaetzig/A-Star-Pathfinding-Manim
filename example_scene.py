@@ -166,7 +166,7 @@ class ExampleScene(MovingCameraScene):
         line_jk = self.adjust_line_to_circle_boundary(point_j, point_k)
         line_ke = self.adjust_line_to_circle_boundary(point_k, point_e)
 
-        # Edit the z-index of the lines to Create them in the background of the points
+        # Edit the z-index of the lines to create them in the background of the points
         line_sa.set_z_index(point_s.z_index - 1)
         line_sb.set_z_index(point_s.z_index - 1)
         line_sc.set_z_index(point_s.z_index - 1)
