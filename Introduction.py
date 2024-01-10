@@ -142,7 +142,6 @@ class AStar(Scene):
         self.play(FadeIn(zeit), run_time=1)
         self.play(FadeIn(res), run_time=1)  # 38
         self.play(
-            FadeOut(way),
             FadeOut(entf),
             FadeOut(zeit),
             FadeOut(res),
