@@ -166,6 +166,26 @@ class ExampleScene(MovingCameraScene):
         line_jk = self.adjust_line_to_circle_boundary(point_j, point_k)
         line_ke = self.adjust_line_to_circle_boundary(point_k, point_e)
 
+        # Edit the z-index of the lines to Create them in the background of the points
+        line_sa.set_z_index(point_s.z_index - 1)
+        line_sb.set_z_index(point_s.z_index - 1)
+        line_sc.set_z_index(point_s.z_index - 1)
+        line_ab.set_z_index(point_s.z_index - 1)
+        line_ad.set_z_index(point_s.z_index - 1)
+        line_bd.set_z_index(point_s.z_index - 1)
+        line_bh.set_z_index(point_s.z_index - 1)
+        line_df.set_z_index(point_s.z_index - 1)
+        line_hf.set_z_index(point_s.z_index - 1)
+        line_hg.set_z_index(point_s.z_index - 1)
+        line_ge.set_z_index(point_s.z_index - 1)
+        line_cl.set_z_index(point_s.z_index - 1)
+        line_li.set_z_index(point_s.z_index - 1)
+        line_lj.set_z_index(point_s.z_index - 1)
+        line_ij.set_z_index(point_s.z_index - 1)
+        line_ik.set_z_index(point_s.z_index - 1)
+        line_jk.set_z_index(point_s.z_index - 1)
+        line_ke.set_z_index(point_s.z_index - 1)
+
         # Create weights
         weight_sa = (
             Text("7", color=GREEN, weight=BOLD)
