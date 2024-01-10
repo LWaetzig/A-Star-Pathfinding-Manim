@@ -23,21 +23,19 @@ class PathfindingScene(MovingCameraScene):
             alignment="center",
         )
         self.play(ReplacementTransform(subtitle, text))
-        self.wait(14)
+        self.wait(10)
         self.play(FadeOut(text), FadeOut(title))
 
         # GRAPH THEORIE
         title = Text("Graph Theory", font_size=70)
         self.play(FadeIn(title, shift=DOWN, scale=0.8))
-        self.wait(5)
+        self.wait(3)
         self.play(title.animate.scale(0.5).to_corner(UL))
-        self.wait(2)
+        self.wait(1)
+
         # create graph
         text = Text(
-            "Graph G consists of a set of vertices V and edges E",
-            font_size=30,
-            t2c={"Knoten": RED, "Kanten": GREEN},
-            t2w={"Knoten": BOLD, "Kanten": BOLD},
+            "Graph G consists of a set of vertices V and edges E", font_size=30
         ).to_edge(DOWN)
         vertices = [
             "A",
@@ -52,38 +50,38 @@ class PathfindingScene(MovingCameraScene):
             "C": [1.5, 0, 0],
             "D": [0, -1.5, 0],
         }
-        vertex_config = {
-            "A": {"fill_color": RED},
-            "B": {"fill_color": RED},
-            "C": {"fill_color": RED},
-            "D": {"fill_color": RED},
-        }
-        edge_config = {
-            ("A", "B"): {"stroke_color": BLUE},
-            ("A", "C"): {"stroke_color": BLUE},
-            ("B", "D"): {"stroke_color": BLUE},
-        }
-        graph = Graph(
-            vertices,
-            edges,
-            layout=positions,
-            labels=True,
-            vertex_config=vertex_config,
-            edge_config=edge_config,
+        graph = Graph(vertices, edges, layout=positions, labels=True)
+        graph_dr = DiGraph(vertices, edges, labels=True, layout=positions).shift(
+            RIGHT * 3.5
         )
+        graph_subtitle = Text("undirected", font_size=30)
+        graph_dr_subtitle = Text("directed", font_size=30)
         self.play(Write(text))
         self.wait(2)
         self.play(
             Create(graph),
             run_time=2,
         )
-        self.wait(14)
-        self.play(FadeOut(graph), FadeOut(text))
+        self.wait(5)
+        self.play(FadeOut(text), graph.animate.shift(LEFT * 3.5))
+        self.wait(1)
+        self.play(
+            Create(graph_dr),
+            Write(graph_subtitle.next_to(graph, DOWN)),
+            Write(graph_dr_subtitle.next_to(graph_dr, DOWN)),
+        )
+        self.wait(5)
+        self.play(
+            FadeOut(graph),
+            FadeOut(graph_dr),
+            FadeOut(graph_subtitle),
+            FadeOut(graph_dr_subtitle),
+        )
 
         # PATHFINDING IN GRAPH
         new_title = Text("Pathfinding", font_size=40).to_corner(UL)
         self.play(ReplacementTransform(title, new_title))
-        self.wait(3)
+        self.wait(2)
 
         vertices = [
             "A",
@@ -121,20 +119,22 @@ class PathfindingScene(MovingCameraScene):
         graph = Graph(vertices, edges, layout=positions, labels=True)
         self.play(
             Create(graph),
-            run_time=3,
+            run_time=2,
         )
-        self.wait(7)
-
-        # change node color
-        for node in ["A", "C", "E"]:
+        self.wait(3)
+        for node in ["A", "E"]:
             node_to_highlight = graph.get_vertices()[node]
             self.play(node_to_highlight.animate.set_fill(RED))
+
+        self.wait(3)
+        node_to_highlight = graph.get_vertices()["C"]
+        self.play(node_to_highlight.animate.set_fill(RED))
         self.play(
             graph.animate.add_edges(
                 ("A", "C"), ("C", "E"), edge_config={"stroke_color": RED}
             ),
         )
 
-        self.wait(5)
+        self.wait(3)
 
-        self.play(FadeOut(graph, shift=UP), FadeOut(new_title))
+        self.play(FadeOut(graph, shift=UP), FadeOut(new_title, shift=UP))
