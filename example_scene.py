@@ -122,6 +122,7 @@ class ExampleScene(MovingCameraScene):
         return group, via_value, went_value, togo_value
 
     def construct(self):
+        # set default font
         Text.set_default(font="Arial")
 
         # Create texts
@@ -280,17 +281,17 @@ class ExampleScene(MovingCameraScene):
 
         # Create heuristic weights
         heuristic_s = (
-            Text("10", color=RED, weight=BOLD)
+            Text("6", color=RED, weight=BOLD)
             .scale(0.5)
             .move_to(point_s.get_center() + 0.5 * DOWN)
         )
         heuristic_a = (
-            Text("9", color=RED, weight=BOLD)
+            Text("8", color=RED, weight=BOLD)
             .scale(0.5)
             .move_to(point_a.get_center() + 0.5 * UP)
         )
         heuristic_b = (
-            Text("7", color=RED, weight=BOLD)
+            Text("4", color=RED, weight=BOLD)
             .scale(0.5)
             .move_to(point_b.get_center() + 0.25 * DOWN + 0.5 * RIGHT)
         )
@@ -310,12 +311,12 @@ class ExampleScene(MovingCameraScene):
             .move_to(point_f.get_center() + 0.5 * DOWN)
         )
         heuristic_g = (
-            Text("3", color=RED, weight=BOLD)
+            Text("2", color=RED, weight=BOLD)
             .scale(0.5)
             .move_to(point_g.get_center() + 0.5 * LEFT)
         )
         heuristic_h = (
-            Text("6", color=RED, weight=BOLD)
+            Text("3", color=RED, weight=BOLD)
             .scale(0.5)
             .move_to(point_h.get_center() + 0.5 * RIGHT)
         )
@@ -764,11 +765,11 @@ class ExampleScene(MovingCameraScene):
             run_time=2,
         )
         self.wait(7)
-        element_s_togo_num.set_text("10")
+        element_s_togo_num.set_text("6")
         self.play(
             ReplacementTransform(
                 animation_group_heur_s,
-                Text("10", color=RED)
+                Text("6", color=RED)
                 .scale(0.75)
                 .move_to(element_s_togo_num.get_center()),
             ),
@@ -815,11 +816,11 @@ class ExampleScene(MovingCameraScene):
             run_time=2,
         )
         self.wait(16)
-        element_a_togo_num.set_text("16")
+        element_a_togo_num.set_text("15")
         self.play(
             ReplacementTransform(
                 animation_group_heur_a,
-                Text("16", color=RED)
+                Text("15", color=RED)
                 .scale(0.75)
                 .move_to(element_a_togo_num.get_center()),
             ),
@@ -866,11 +867,11 @@ class ExampleScene(MovingCameraScene):
             run_time=2,
         )
         self.wait(10)
-        element_b_togo_num.set_text("9")
+        element_b_togo_num.set_text("6")
         self.play(
             ReplacementTransform(
                 animation_group_heur_b,
-                Text("9", color=RED)
+                Text("6", color=RED)
                 .scale(0.75)
                 .move_to(element_b_togo_num.get_center()),
             ),
@@ -996,11 +997,11 @@ class ExampleScene(MovingCameraScene):
         )
         self.wait(8)
         animation_group_new_heur_a.add(animation_new_went_abs_copy)
-        new_element_a_togo_num.set_text("14")
+        new_element_a_togo_num.set_text("13")
         self.play(
             ReplacementTransform(
                 animation_group_new_heur_a,
-                Text("14", color=RED)
+                Text("13", color=RED)
                 .scale(0.75)
                 .move_to(new_element_a_togo_num.get_center()),
             ),
@@ -1096,11 +1097,11 @@ class ExampleScene(MovingCameraScene):
             run_time=1.5,
         )
         animation_group_heur_h.add(animation_went_hbs_copy)
-        element_h_togo_num.set_text("9")
+        element_h_togo_num.set_text("6")
         self.play(
             ReplacementTransform(
                 animation_group_heur_h,
-                Text("9", color=RED)
+                Text("6", color=RED)
                 .scale(0.75)
                 .move_to(element_h_togo_num.get_center()),
             ),
@@ -1210,11 +1211,11 @@ class ExampleScene(MovingCameraScene):
             run_time=1.5,
         )
         animation_group_heur_g.add(animation_went_ghbs_copy)
-        element_g_togo_num.set_text("8")
+        element_g_togo_num.set_text("7")
         self.play(
             ReplacementTransform(
                 animation_group_heur_g,
-                Text("8", color=RED)
+                Text("7", color=RED)
                 .scale(0.75)
                 .move_to(element_g_togo_num.get_center()),
             ),
