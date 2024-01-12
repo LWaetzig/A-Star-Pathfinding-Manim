@@ -13,19 +13,19 @@ class PathfindingScene(MovingCameraScene):
 
         ## Scene objects
         ### Icons for games
-        pacman = SVGMobject(os.path.join("data", "pacman.svg"))
-        counter_stike = SVGMobject(os.path.join("data", "csgo.svg")).scale(1.5)
-        gta = SVGMobject(os.path.join("data", "gta.svg")).scale(1.5)
+        pacman = SVGMobject(os.path.join("data", "icons", "pacman.svg"))
+        counter_stike = SVGMobject(os.path.join("data", "icons", "csgo.svg")).scale(1.5)
+        gta = SVGMobject(os.path.join("data", "icons", "gta.svg")).scale(1.5)
 
         ### Icons for logistics
-        route = SVGMobject(os.path.join("data", "route.svg")).scale(1)
-        logistic = SVGMobject(os.path.join("data", "truck.svg")).scale(1)
-        dhl = SVGMobject(os.path.join("data", "dhl.svg")).scale(0.3)
+        route = SVGMobject(os.path.join("data", "icons", "route.svg")).scale(1)
+        logistic = SVGMobject(os.path.join("data", "icons", "truck.svg")).scale(1)
+        dhl = SVGMobject(os.path.join("data", "icons", "dhl.svg")).scale(0.3)
 
         ### Icons for technology
-        network = SVGMobject(os.path.join("data", "network.svg")).scale(1)
-        robot = SVGMobject(os.path.join("data", "robot.svg")).scale(1)
-        process = SVGMobject(os.path.join("data", "process.svg")).scale(1)
+        network = SVGMobject(os.path.join("data", "icons", "network.svg")).scale(1)
+        robot = SVGMobject(os.path.join("data", "icons", "robot.svg")).scale(1)
+        process = SVGMobject(os.path.join("data", "icons", "process.svg")).scale(1)
 
         ###############################
         # Start video timeline
