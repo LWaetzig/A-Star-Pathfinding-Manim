@@ -26,26 +26,3 @@ class Outro(MovingCameraScene):
             run_time=2,
         )
         self.wait(3)
-        self.clear()
-        self.wait(2)
-
-        timeline = NumberLine(
-            x_range=[0, 100, 1],
-            length=100,
-            include_numbers=True,
-            include_ticks=True,
-            color=WHITE,
-        ).rotate(PI / 2)
-        timeline.move_to(ORIGIN)
-        self.play(Create(timeline), run_time=5)
-        self.wait(2)
-
-        # vertical_line = Line(
-        #     start=ORIGIN, end=[0, -20, 0], color=WHITE, stroke_opacity=0
-        # )
-        # self.play(Create(vertical_line))
-        # self.wait(1)
-        # self.play(self.camera.frame.animate.shift(DOWN * 20))
-        # self.wait(1)
-        # self.play(Write(Text("THANK YOU", font_size=70).next_to(vertical_line, DOWN)))
-        # self.wait(2)
