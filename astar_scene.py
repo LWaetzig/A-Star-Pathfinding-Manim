@@ -3,7 +3,7 @@ import os
 from manim import *
 
 
-class AStar(Scene):
+class AStarScene(Scene):
     def construct(self):
         Text.set_default(font="Arial")
 
@@ -45,6 +45,13 @@ class AStar(Scene):
 
         # Create Texts
         title = Text("A* Pathfinding Algorithm", font_size=70)
+
+        usestxt = Text("uses a", font_size=25).move_to(0.5 * DOWN)
+        estfct = Text("estimation function", font_size=49).move_to(1 * DOWN)
+        resp = Text("respectively", font_size=25).move_to(1.5 * DOWN)
+        heuristictxt = Text("Heuristic", font_size=49).move_to(2 * DOWN)
+
+        heuristictitle = Text("Heuristic", font_size=70)
 
         text_1 = Text(
             "Find the most efficient path between nodes", font_size=30
@@ -93,6 +100,8 @@ class AStar(Scene):
 
         dateandnames = VGroup(name1, name2, name3, text_2)
 
+        txtgrp = VGroup(title, usestxt, estfct, resp, heuristictxt)
+
         ###############################
         # Start with the video timeline
         ###############################
@@ -101,15 +110,15 @@ class AStar(Scene):
         self.wait(2)
         self.play(title.animate.scale(0.5).to_corner(UL), run_time=1)
         self.wait(1)
-        #5
+
         self.play(Create(p1), Create(p2), Create(p3), run_time=2)
         self.play(Create(arrow1), Create(arrow2), run_time=2)
         self.play(Write(text_1), Create(arrow3), run_time=2)
         self.wait(3)
-        # 14
+
         self.play(ReplacementTransform(g1, text_2), run_time=1)
         self.wait(1)
-        #16
+
         self.play(
             ReplacementTransform(text_2.copy(), name1), FadeIn(pic_peter), run_time=1
         )
@@ -120,7 +129,7 @@ class AStar(Scene):
             ReplacementTransform(name2.copy(), name3), FadeIn(pic_bertram), run_time=1
         )
         self.wait(1)
-        #20
+
         self.play(
             FadeOut(pic_peter),
             FadeOut(pic_nils),
@@ -128,26 +137,58 @@ class AStar(Scene):
             ReplacementTransform(dateandnames, text_3),
             run_time=1,
         )
-        self.wait(3)  
-        # 24
+        self.wait(3)
+
         self.play(ReplacementTransform(text_3, new_way), run_time=1)
         self.wait(3)
-        #28
+
         self.play(Write(euro), run_time=1)
         self.wait(4)
-        self.play(FadeOut(euro), run_time=1)  # 34
+        self.play(FadeOut(euro), run_time=1)
         self.play(new_way.animate.move_to(1 * UP), run_time=1)
 
         self.play(FadeIn(entf), run_time=1)
         self.play(FadeIn(zeit), run_time=1)
-        self.play(FadeIn(res), run_time=1)  # 38
+        self.play(FadeIn(res), run_time=1)
         self.play(
             FadeOut(entf),
             FadeOut(zeit),
             FadeOut(res),
             FadeOut(new_way),
             run_time=1,
-        )  # 39
+        )
 
-        # Ab hier dann Heuristik animationen. Rest ist schon Synchron mit Audiospur
-        self.wait(10)
+        self.play(title.animate.scale(1.4).move_to(ORIGIN), run_time=1)
+        self.wait(1.5)
+
+        self.play(title.animate.shift(0.5 * UP), FadeIn(usestxt), run_time=1)
+        self.wait(1)
+
+        self.play(
+            title.animate.shift(0.5 * UP),
+            usestxt.animate.shift(0.5 * UP),
+            FadeIn(estfct),
+            run_time=1,
+        )
+
+        self.play(
+            title.animate.shift(0.5 * UP),
+            usestxt.animate.shift(0.5 * UP),
+            estfct.animate.shift(0.5 * UP),
+            FadeIn(resp),
+            run_time=1,
+        )
+
+        self.play(
+            title.animate.shift(0.5 * UP),
+            usestxt.animate.shift(0.5 * UP),
+            estfct.animate.shift(0.5 * UP),
+            resp.animate.shift(0.5 * UP),
+            FadeIn(heuristictxt),
+            run_time=1,
+        )
+        self.wait(2)
+
+        self.play(ReplacementTransform(txtgrp, heuristictitle), run_time=1)
+
+        self.wait(1.5)
