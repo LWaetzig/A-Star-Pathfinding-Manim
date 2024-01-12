@@ -21,24 +21,24 @@ class AStarScene(Scene):
         p1 = Dot(color=GREEN, radius=0.4).move_to(2 * LEFT + 2 * UP)
         p2 = Dot(color=BLUE, radius=0.4).move_to(2 * RIGHT + 2 * UP)
         p3 = Dot(color=RED, radius=0.4).move_to(2 * RIGHT + 2 * DOWN)
-        arrow1 = Arrow(p1.get_center(), p2.get_center(), buff=0.4)
-        arrow2 = Arrow(p2.get_center(), p3.get_center(), buff=0.4)
-        arrow3 = Arrow(p1.get_center(), p3.get_center(), buff=0.4)
+        line1 = Line(p1.get_center(), p2.get_center(), buff=0.4)
+        line2 = Line(p2.get_center(), p3.get_center(), buff=0.4)
+        line3 = Line(p1.get_center(), p3.get_center(), buff=0.4)
 
         way = (
-            VGroup(p1, p2, p3, arrow1, arrow2, arrow3).rotate(0.25 * PI).move_to(ORIGIN)
+            VGroup(p1, p2, p3, line1, line2, line3).rotate(0.25 * PI).move_to(ORIGIN)
         )
 
         # Create Graph (again because of bug in animation)
         p10 = Dot(color=GREEN, radius=0.4).shift(2 * LEFT + 2 * UP)
         p20 = Dot(color=BLUE, radius=0.4).shift(2 * RIGHT + 2 * UP)
         p30 = Dot(color=RED, radius=0.4).shift(2 * RIGHT + 2 * DOWN)
-        arrow10 = Arrow(p10.get_center(), p20.get_center(), buff=0.4)
-        arrow20 = Arrow(p20.get_center(), p30.get_center(), buff=0.4)
-        arrow30 = Arrow(p10.get_center(), p30.get_center(), buff=0.4)
+        line10 = Line(p10.get_center(), p20.get_center(), buff=0.4)
+        line20 = Line(p20.get_center(), p30.get_center(), buff=0.4)
+        line30 = Line(p10.get_center(), p30.get_center(), buff=0.4)
 
         new_way = (
-            VGroup(p10, p20, p30, arrow10, arrow20, arrow30)
+            VGroup(p10, p20, p30, line10, line20, line30)
             .rotate(0.25 * PI)
             .move_to(ORIGIN)
         )
@@ -66,7 +66,7 @@ class AStarScene(Scene):
             "Generalization and extension of Dijkstra's algorithm", font_size=30
         )
 
-        euro = Text("€↓", font_size=70).move_to(arrow30.get_center() + 1 * DOWN)
+        euro = Text("€↓", font_size=70).move_to(line30.get_center() + 1 * DOWN)
 
         # Create pictures
         pic_peter = (
@@ -112,8 +112,8 @@ class AStarScene(Scene):
         self.wait(1)
 
         self.play(Create(p1), Create(p2), Create(p3), run_time=2)
-        self.play(Create(arrow1), Create(arrow2), run_time=2)
-        self.play(Write(text_1), Create(arrow3), run_time=2)
+        self.play(Create(line1), Create(line2), run_time=2)
+        self.play(Write(text_1), Create(line3), run_time=2)
         self.wait(3)
 
         self.play(ReplacementTransform(g1, text_2), run_time=1)
