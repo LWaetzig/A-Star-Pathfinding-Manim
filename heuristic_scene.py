@@ -3,6 +3,7 @@ from manim import *
 
 class HeuristicScene(MovingCameraScene):
     def construct(self):
+        # set default font
         Text.set_default(font="Arial")
 
         # Create Graph
@@ -35,7 +36,6 @@ class HeuristicScene(MovingCameraScene):
         ad_heur_s = Text("4", font_size=25).move_to(ad_point_s.get_center() + 1 * DOWN)
         ad_heur_x = Text("1", font_size=25).move_to(ad_point_x.get_center() + 1 * DOWN)
         ad_heur_e = Text("0", font_size=25).move_to(ad_point_e.get_center() + 1 * DOWN)
-
         ad_graph = VGroup(
             ad_point_s,
             ad_point_x,
@@ -75,7 +75,6 @@ class HeuristicScene(MovingCameraScene):
         nonad_heur_e = Text("0", font_size=25).move_to(
             nonad_point_e.get_center() + 1 * DOWN
         )
-
         nonad_graph = VGroup(
             nonad_point_s,
             nonad_point_x,
@@ -131,7 +130,7 @@ class HeuristicScene(MovingCameraScene):
             font_size=30,
         ).move_to(1 * DOWN)
 
-        # Create other stuff
+        # Create other necessary items
         arrow1 = Arrow(2.4 * UP, 0.8333 * UP, buff=0.35)
         arrow2 = Arrow(0.8333 * UP, 0.8334 * DOWN, buff=0.35)
         arrow3 = Arrow(0.8334 * DOWN, 2.5 * DOWN, buff=0.35)
@@ -143,28 +142,26 @@ class HeuristicScene(MovingCameraScene):
         arrow5 = Arrow(1 * UP, 1 * DOWN, buff=0.35)
 
         ###############################
-        # Start with the video timeline
+        # Start video timeline
         ###############################
 
+        # show title and move it to upper left corner
         self.play(title.animate.scale(0.5).to_corner(UL), run_time=1)
         self.wait(2)
-        # 3
+        # display heuristic formular
         self.play(Write(formula), run_time=2)
         self.wait(1)
-        # 6
         self.play(formula.animate.scale(0.7).move_to(2 * UP), run_time=1)
         self.wait(1)
+        # create example graph
         self.play(Create(graph), run_time=2)
         self.wait(1)
-        # 11
         self.play(Write(g_x), run_time=1)
         self.play(Create(linegx), run_time=3)
         self.wait(1.5)
-        # 16.5
         self.play(Write(h_x), run_time=1)
         self.play(Create(linehx), run_time=3)
         self.wait(1.5)
-        # 22
         self.play(
             FadeOut(g_x, shift=DOWN),
             FadeOut(linegx, shift=DOWN),
@@ -175,17 +172,15 @@ class HeuristicScene(MovingCameraScene):
             run_time=1,
         )
         self.wait(1)
-        # 24
+        # explain heuristic function
         self.play(Create(arrow1), run_time=1)
         self.play(Write(directtxt), run_time=1)
         self.wait(3)
-        # 29
         self.play(Create(arrow2), run_time=1)
         self.play(Write(priotxt), run_time=1)
         self.play(Create(arrow3), run_time=1)
         self.play(Write(reducetxt), run_time=1)
         self.wait(5)
-        # 38
         self.play(
             FadeOut(arrow1),
             FadeOut(arrow2),
@@ -197,18 +192,14 @@ class HeuristicScene(MovingCameraScene):
             run_time=1,
         )
         self.wait(1)
-        # 40
-
+        # explain admissibility
         self.play(Write(admissibleexplain), run_time=4)
         self.wait(2)
-        # 46
         self.play(FadeIn(anglearrow), run_time=1)
         self.play(Write(guaranteetxt), run_time=1)
         self.wait(2)
-        # 50
         self.play(FadeOut(anglearrow), FadeOut(guaranteetxt), run_time=1)
         self.wait(1)
-        # 52
         self.play(admissibleexplain.animate.scale(0.7).to_edge(DOWN), run_time=1)
         self.play(FadeIn(ad_graph), FadeIn(nonad_graph), run_time=1)
         self.play(
@@ -217,7 +208,6 @@ class HeuristicScene(MovingCameraScene):
             run_time=2,
         )
         self.wait(1)
-        # 57
         self.play(FadeIn(admissibletitle), FadeIn(notadmissibletitle), run_time=1)
         self.play(
             FadeIn(ad_weight1.move_to(ad_line1.get_center() + 0.5 * DOWN)),
@@ -227,40 +217,30 @@ class HeuristicScene(MovingCameraScene):
             run_time=1,
         )
         self.wait(10)
-        # 1:09
-
         self.play(
             FadeIn(ad_heur_s.move_to(ad_point_s.get_center() + 1 * DOWN)),
             run_time=1,
         )
-        # 1:10
         self.wait(4)
         self.play(
             FadeIn(ad_heur_x.move_to(ad_point_x.get_center() + 1 * DOWN)),
             run_time=1,
         )
-        # 1:15
         self.wait(4)
         self.play(
             FadeIn(ad_heur_e.move_to(ad_point_e.get_center() + 1 * DOWN)),
             run_time=1,
         )
         self.wait(4.5)
-        # 1:24.5
-
         self.play(
             FadeIn(nonad_heur_s.move_to(nonad_point_s.get_center() + 1 * DOWN)),
             run_time=1,
         )
-
-        # 1:25.5
         self.wait(1)
         self.play(
             FadeIn(nonad_heur_x.move_to(nonad_point_x.get_center() + 1 * DOWN)),
             run_time=1,
         )
-
-        # 1:27.5
         self.wait(1)
         self.play(
             FadeIn(nonad_heur_e.move_to(nonad_point_e.get_center() + 1 * DOWN)),
@@ -286,14 +266,13 @@ class HeuristicScene(MovingCameraScene):
             run_time=1,
         )
         self.wait(1)
-        # 1:39
+        # explain efficiency
         self.play(Write(efficiencytxt), run_time=1)
         self.wait(1)
-        # 1:41
         self.play(Create(arrow5), run_time=1)
         self.play(Write(dependendtxt), run_time=1)
         self.wait(6)
-        # 1:49
+
         self.play(
             FadeOut(title),
             FadeOut(efficiencytxt),
@@ -301,3 +280,4 @@ class HeuristicScene(MovingCameraScene):
             FadeOut(dependendtxt),
             run_time=1,
         )
+        self.wait(2)
