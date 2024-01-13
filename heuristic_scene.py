@@ -124,7 +124,7 @@ class HeuristicScene(MovingCameraScene):
             "A* guarantees finding the optimal path", font_size=30
         ).move_to(1 * DOWN)
 
-        efficiencytxt = Text("A* can be very efficient", font_size=30).move_to(1 * DOWN)
+        efficiencytxt = Text("A* can be very efficient", font_size=30).move_to(1 * UP)
 
         dependendtxt = Text(
             "Dependent on the quality of the heuristic and structure of the graph",
@@ -139,6 +139,8 @@ class HeuristicScene(MovingCameraScene):
         arrline = Line(5 * LEFT + 0.3 * DOWN, 5 * LEFT + 1 * DOWN)
         arrow4 = Arrow(5.25 * LEFT + 1 * DOWN, 3.5 * LEFT + 1 * DOWN)
         anglearrow = VGroup(arrline, arrow4)
+
+        arrow5 = Arrow(1 * UP, 1 * DOWN, buff=0.35)
 
         ###############################
         # Start with the video timeline
@@ -288,14 +290,14 @@ class HeuristicScene(MovingCameraScene):
         self.play(Write(efficiencytxt), run_time=1)
         self.wait(1)
         # 1:41
-        self.play(FadeIn(anglearrow.move_to(1 * DOWN)), run_time=1)
+        self.play(Create(arrow5), run_time=1)
         self.play(Write(dependendtxt), run_time=1)
         self.wait(6)
         # 1:49
         self.play(
             FadeOut(title),
             FadeOut(efficiencytxt),
-            FadeOut(anglearrow),
+            FadeOut(arrow5),
             FadeOut(dependendtxt),
             run_time=1,
         )
