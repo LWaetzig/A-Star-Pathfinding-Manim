@@ -430,6 +430,13 @@ class ExampleScene(MovingCameraScene):
             weight_cl,
         )
 
+        group_final_path_weights = VGroup(
+            weight_sb,
+            weight_bh,
+            weight_hg,
+            weight_ge
+        )
+
         group_explain_heuristics = VGroup(
             heuristic_i, heuristic_j, heuristic_k, heuristic_l, heuristic_e
         )
@@ -699,23 +706,27 @@ class ExampleScene(MovingCameraScene):
         # Create the title
         self.play(Write(title), run_time=1.5)
         self.play(FadeOut(title, run_time=1.5))
-        self.wait(2)
+        self.wait(4)
+        # 7
 
         # Create the text for the start and end point and morph them into the points
         camera = self.camera.frame.save_state()
         self.play(Write(start_text), Write(end_text), run_time=2)
+        self.wait(2)
         self.play(
             ReplacementTransform(start_text, group_start),
             ReplacementTransform(end_text, group_end),
             run_time=2,
         )
         self.wait(2)
+        # 15
 
         # Create the whole graph
         self.play(Create(group_other_points), Write(group_other_letters), run_time=2)
-        self.wait(2)
+        self.wait(1)
         self.play(Create(group_lines), run_time=2)
-        self.wait(2)
+        self.wait(5)
+        # 25
 
         # Zoom to a Group of points to explain the weights and heuristics
         self.play(
@@ -723,26 +734,37 @@ class ExampleScene(MovingCameraScene):
             run_time=3,
         )
         self.wait(3)
+        # 31
 
         self.play(Write(group_explain_weights), run_time=2)
-        self.wait(7)
+        self.wait(5)
+        # 38
         self.play(Write(group_explain_heuristics), run_time=2)
-        self.wait(8)
+        self.wait(12)
+        # 52
 
         # Zoom out again and show the other weights and heuristics
         self.play(Restore(camera), run_time=2)
         self.wait(1)
+        # 55
 
         self.play(Write(group_other_weights), run_time=2)
         self.wait(1)
+        # 58
         self.play(Write(group_other_heuristics), run_time=2)
         self.wait(2)
+        # 1:02
 
         # Zoom out of the graph and create the open list
         self.play(self.camera.frame.animate.scale(1.75).move_to(5 * RIGHT), run_time=3)
         camera = self.camera.frame.save_state()
 
-        self.play(Write(list_title), Create(list_outline), run_time=2)
+        self.play(Create(list_outline), run_time=2)
+        self.wait(7)
+        # 1:14
+        self.play(Write(list_title), run_time=2)
+        self.wait(1)
+        # 1:17
 
         # Create the label of Point S, the first element of the open list and animate it
         self.play(
@@ -751,10 +773,11 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.play(Create(element_s_group), run_time=2)
-        self.wait(8)
+        self.play(Create(element_s_group), run_time=4)
+        # 1:23
+        self.wait(9.5)
+        # 1:32.5
         element_s_went_num.set_text("0")
-        self.wait(5)
         self.play(
             ReplacementTransform(
                 element_s_went_num,
@@ -764,7 +787,9 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(7)
+        # 1:34.5
+        self.wait(17.5)
+        # 1:52
         element_s_togo_num.set_text("6")
         self.play(
             ReplacementTransform(
@@ -775,6 +800,8 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
+        self.wait(2)
+        # 1:56
 
         # Zoom out and add it into the list
         self.play(Restore(camera), run_time=2)
@@ -782,10 +809,15 @@ class ExampleScene(MovingCameraScene):
             element_s_group.animate.scale(1.5).move_to(
                 list_outline.get_center() + 5 * UP
             ),
-            Create(focus_line),
             run_time=2,
         )
-        self.wait(8.5)
+        # 2:00
+        self.play(
+            Create(focus_line),
+            run_time=5,
+        )
+        self.wait(3)
+        # 2:08
 
         # Create the Label of Point A and animate it
         self.play(
@@ -796,15 +828,17 @@ class ExampleScene(MovingCameraScene):
         )
         self.play(Create(element_a_group), run_time=2)
         self.wait(2)
+        # 2:14
         element_a_via_text.set_text("S")
         self.play(
             ReplacementTransform(
                 animation_group_via_as,
                 Text("S").scale(0.75).move_to(element_a_via_text.get_center()),
             ),
-            run_time=1.5,
+            run_time=2,
         )
-        self.wait(4)
+        self.wait(5)
+        # 2:21
         element_a_went_num.set_text("7")
         self.play(
             ReplacementTransform(
@@ -816,6 +850,7 @@ class ExampleScene(MovingCameraScene):
             run_time=2,
         )
         self.wait(16)
+        # 2:39
         element_a_togo_num.set_text("15")
         self.play(
             ReplacementTransform(
@@ -826,7 +861,8 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(4)
+        self.wait(1)
+        # 2:42
 
         # Zoom out and add it into the list
         self.play(Restore(camera), run_time=2)
@@ -837,6 +873,7 @@ class ExampleScene(MovingCameraScene):
             run_time=2,
         )
         self.wait(5.5)
+        # 2:51.5
 
         # Create the Label of Point B and animate it
         self.play(
@@ -845,17 +882,19 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(2)
-        self.play(Create(element_b_group), run_time=2)
+        self.play(Create(element_b_group), run_time=4)
+        self.wait(2.5)
+        # 3:00
         element_b_via_text.set_text("S")
         self.play(
             ReplacementTransform(
                 animation_group_via_bs,
                 Text("S").scale(0.75).move_to(element_b_via_text.get_center()),
             ),
-            run_time=1.5,
+            run_time=2,
         )
-        self.wait(2)
+        self.wait(1)
+        # 3:03
         element_b_went_num.set_text("2")
         self.play(
             ReplacementTransform(
@@ -866,7 +905,8 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(10)
+        self.wait(8)
+        # 3:13
         element_b_togo_num.set_text("6")
         self.play(
             ReplacementTransform(
@@ -877,11 +917,13 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(2.5)
+        self.wait(1)
+        # 3:16
 
         # Zoom out and add it into the list
         self.play(Restore(camera), run_time=2)
-        self.wait(7)
+        self.wait(10)
+        # 3:28
         self.play(
             element_a_group.animate.move_to(list_outline.get_center() + 1.25 * UP),
             element_b_group.animate.scale(1.5).move_to(
@@ -889,7 +931,8 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(4.5)
+        self.wait(1)
+        # 3:31
 
         # Create the Label of Point C and animate it
         self.play(
@@ -905,7 +948,7 @@ class ExampleScene(MovingCameraScene):
                 animation_group_via_cs,
                 Text("S").scale(0.75).move_to(element_c_via_text.get_center()),
             ),
-            run_time=1.5,
+            run_time=2,
         )
         element_c_went_num.set_text("3")
         self.play(
@@ -915,7 +958,7 @@ class ExampleScene(MovingCameraScene):
                 .scale(0.75)
                 .move_to(element_c_went_num.get_center()),
             ),
-            run_time=1.5,
+            run_time=2,
         )
         element_c_togo_num.set_text("11")
         self.play(
@@ -927,10 +970,13 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(4)
+        self.wait(1)
+        # 3:40
 
         # Zoom out and add it into the list
         self.play(Restore(camera), run_time=2)
+        self.wait(4)
+        # 3:46
         self.play(
             element_a_group.animate.move_to(list_outline.get_center() + 0.5 * DOWN),
             element_c_group.animate.scale(1.5).move_to(
@@ -939,25 +985,31 @@ class ExampleScene(MovingCameraScene):
             run_time=2,
         )
         self.wait(4)
+        # 3:52
 
         # Create the Done List and add Label of Point A and animate the transitions
-        self.play(Restore(camera), run_time=2)
         self.play(self.camera.frame.animate.move_to(15 * RIGHT), run_time=2)
-
         self.play(Write(path_list_title), Create(path_list_outline), run_time=2)
-        self.wait(5)
+        # 3:56
+        self.wait(2)
         self.play(
             element_s_group.animate.move_to(path_list_outline.get_center() + 5 * UP),
+            run_time=2,
+        )
+        # 4:00
+        self.wait(4)
+        self.play(
             element_b_group.animate.move_to(list_outline.get_center() + 5 * UP),
             element_c_group.animate.move_to(list_outline.get_center() + 3 * UP),
             element_a_group.animate.move_to(list_outline.get_center() + 1.25 * UP),
             run_time=2,
         )
-        self.wait(4)
-
+        self.wait(1)
+        # 4:07
         # Create the new Label of Point A and animate the replacement of the old one
         self.play(Restore(camera), run_time=2)
-        self.wait(3)
+        self.wait(4)
+        # 4:13
 
         self.play(
             self.camera.frame.animate.scale(0.3).move_to(
@@ -965,17 +1017,17 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(4.5)
+        self.wait(4)
+        # 4:19
         self.play(
             element_a_group.animate.scale(1 / 1.5).move_to(
                 group_sba.get_center() + 2.3 * UP
             ),
             run_time=2,
         )
-        self.wait(1)
-
         self.play(Create(new_element_a_group), run_time=2)
-        self.wait(2)
+        self.wait(3)
+        # 4:26
         new_element_a_via_text.set_text("B")
         self.play(
             ReplacementTransform(
@@ -984,7 +1036,8 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(5)
+        self.wait(7)
+        # 4:35
         new_element_a_went_num.set_text("5")
         self.play(
             ReplacementTransform(
@@ -996,6 +1049,7 @@ class ExampleScene(MovingCameraScene):
             run_time=2,
         )
         self.wait(8)
+        # 4:45
         animation_group_new_heur_a.add(animation_new_went_abs_copy)
         new_element_a_togo_num.set_text("13")
         self.play(
@@ -1007,8 +1061,8 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(5)
-
+        self.wait(7)
+        # 4:54
         self.play(FadeOut(element_a_group), run_time=2)
         self.play(Restore(camera), run_time=2)
         self.play(
@@ -1017,7 +1071,8 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(1)
+        # 5:01
 
         # Create the Label of Point D and animate it
         self.play(
@@ -1026,7 +1081,6 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-
         self.play(Create(element_d_group), run_time=2)
         element_d_via_text.set_text("B")
         self.play(
@@ -1034,8 +1088,9 @@ class ExampleScene(MovingCameraScene):
                 animation_group_via_db,
                 Text("B").scale(0.75).move_to(element_d_via_text.get_center()),
             ),
-            run_time=1.5,
+            run_time=2,
         )
+        # 5:07
         element_d_went_num.set_text("6")
         self.play(
             ReplacementTransform(
@@ -1044,7 +1099,7 @@ class ExampleScene(MovingCameraScene):
                 .scale(0.75)
                 .move_to(element_d_went_num.get_center()),
             ),
-            run_time=1.5,
+            run_time=2,
         )
         animation_group_heur_d.add(animation_went_dbs_copy)
         element_d_togo_num.set_text("14")
@@ -1057,7 +1112,8 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(1)
+        # 5:12
 
         # Zoom out and add it into the list
         self.play(Restore(camera), run_time=2)
@@ -1067,7 +1123,8 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(2)
+        # 5:16
+        self.wait(1)
 
         # Create the Label of Point H and animate it
         self.play(
@@ -1076,15 +1133,17 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-
+        # 5:19
         self.play(Create(element_h_group), run_time=2)
+        self.wait(2)
+        # 5:23
         element_h_via_text.set_text("B")
         self.play(
             ReplacementTransform(
                 animation_group_via_hb,
                 Text("B").scale(0.75).move_to(element_h_via_text.get_center()),
             ),
-            run_time=1.5,
+            run_time=2,
         )
         element_h_went_num.set_text("3")
         self.play(
@@ -1094,7 +1153,7 @@ class ExampleScene(MovingCameraScene):
                 .scale(0.75)
                 .move_to(element_h_went_num.get_center()),
             ),
-            run_time=1.5,
+            run_time=2,
         )
         animation_group_heur_h.add(animation_went_hbs_copy)
         element_h_togo_num.set_text("6")
@@ -1108,9 +1167,10 @@ class ExampleScene(MovingCameraScene):
             run_time=2,
         )
         self.wait(2)
-        # 5:05:50
+        
         # Zoom out, add it into the list and move Label of Point B to the Done List
         self.play(Restore(camera), run_time=2)
+        # 5:33
         self.play(
             element_h_group.animate.scale(1.5).move_to(
                 list_outline.get_center() + 3 * UP
@@ -1120,8 +1180,10 @@ class ExampleScene(MovingCameraScene):
             element_d_group.animate.move_to(list_outline.get_center() + 2.25 * DOWN),
             run_time=2,
         )
-        self.wait(3.5)
+        self.wait(4)
         self.play(self.camera.frame.animate.move_to(15 * RIGHT), run_time=2)
+        # 5:41
+        self.wait(2)
         self.play(
             element_b_group.animate.move_to(path_list_outline.get_center() + 3.25 * UP),
             element_h_group.animate.move_to(list_outline.get_center() + 5 * UP),
@@ -1130,7 +1192,8 @@ class ExampleScene(MovingCameraScene):
             element_d_group.animate.move_to(list_outline.get_center() + 0.5 * DOWN),
             run_time=2,
         )
-        self.wait(4)
+        self.wait(1)
+        # 5:46
 
         # Create the Label of Point F and animate it
         self.play(Restore(camera), run_time=2)
@@ -1140,8 +1203,10 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
+        # 5:50
 
         self.play(Create(element_f_group), run_time=2)
+        # 5:52
         element_f_via_text.set_text("H")
         self.play(
             ReplacementTransform(
@@ -1171,7 +1236,7 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(2)
+        # 5:57
 
         # Zoom out and add it into the list
         self.play(Restore(camera), run_time=2)
@@ -1183,7 +1248,8 @@ class ExampleScene(MovingCameraScene):
             element_d_group.animate.move_to(list_outline.get_center() + 2.25 * DOWN),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(1)
+        # 6:02
 
         # Create the Label of Point G and animate it
         self.play(
@@ -1221,7 +1287,8 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(1)
+        # 6:10
 
         # Zoom out, add it into the list and move Label of Point H to the Done List
         self.play(Restore(camera), run_time=2)
@@ -1238,7 +1305,7 @@ class ExampleScene(MovingCameraScene):
             run_time=2,
         )
         self.wait(2)
-
+        # 6:20
         self.play(self.camera.frame.animate.move_to(15 * RIGHT), run_time=2)
         self.play(
             element_h_group.animate.move_to(path_list_outline.get_center() + 1.5 * UP),
@@ -1249,11 +1316,13 @@ class ExampleScene(MovingCameraScene):
             element_d_group.animate.move_to(list_outline.get_center() + 2.25 * DOWN),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(1)
+        # 6:25
 
         # Create the Label of Point E and animate it
         self.play(Restore(camera), run_time=2)
-        self.wait(2)
+        self.wait(1)
+        # 6:28
         self.play(
             self.camera.frame.animate.scale(0.55).move_to(
                 group_sbhge.get_center() + 1 * RIGHT
@@ -1262,7 +1331,8 @@ class ExampleScene(MovingCameraScene):
         )
 
         self.play(Create(element_e_group), run_time=2)
-        self.wait(5)
+        self.wait(8)
+        # 6:40
         element_e_via_text.set_text("G")
         self.play(
             ReplacementTransform(
@@ -1292,7 +1362,8 @@ class ExampleScene(MovingCameraScene):
             ),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(1.5)
+        # 6:47
 
         # Zoom out, add it into the list and move Label of Point G to the Done List
         self.play(Restore(camera), run_time=2)
@@ -1308,7 +1379,8 @@ class ExampleScene(MovingCameraScene):
             element_d_group.animate.move_to(list_outline.get_center() + 4 * DOWN),
             run_time=2,
         )
-        self.wait(2)
+        self.wait(3)
+        # 6:54
 
         self.play(self.camera.frame.animate.move_to(15 * RIGHT), run_time=2)
         self.play(
@@ -1322,17 +1394,20 @@ class ExampleScene(MovingCameraScene):
             element_d_group.animate.move_to(list_outline.get_center() + 2.25 * DOWN),
             run_time=2,
         )
+        self.wait(2)
+        # 7:00
 
         # Move Label of Point E to the Done List
         self.play(Restore(camera), run_time=2)
         self.wait(2)
         self.play(self.camera.frame.animate.move_to(15 * RIGHT), run_time=2)
+        # 7:06
         self.play(
             element_e_group.animate.move_to(path_list_outline.get_center() + 2 * DOWN),
             run_time=2,
         )
-
-        self.wait(3)
+        self.wait(1)
+        # 7:09
 
         # Let the rest of the open list disappear
         self.play(
@@ -1345,30 +1420,32 @@ class ExampleScene(MovingCameraScene):
             FadeOut(focus_line),
             run_time=2,
         )
+        # 7:11
 
         # iterate backwards through the done list and create the final path
         self.play(
             element_e_group.animate.move_to(list_outline.get_center() + 5 * UP),
-            run_time=2,
+            run_time=3,
         )
         self.play(
             element_g_group.animate.move_to(list_outline.get_center() + 3.25 * UP),
-            run_time=2,
+            run_time=3,
         )
         self.play(
             element_h_group.animate.move_to(list_outline.get_center() + 1.5 * UP),
-            run_time=2,
+            run_time=3,
         )
         self.play(
             element_b_group.animate.move_to(list_outline.get_center() + 0.25 * DOWN),
-            run_time=2,
+            run_time=3,
         )
         self.play(
             element_s_group.animate.move_to(list_outline.get_center() + 2 * DOWN),
-            run_time=2,
+            run_time=3,
         )
-        self.wait(18.5)
-
+        # 7:26
+        self.wait(16)
+        # 7:42
         # switch the elements to the right order
         self.play(
             element_s_group.animate.move_to(list_outline.get_center() + 5 * UP),
@@ -1379,8 +1456,8 @@ class ExampleScene(MovingCameraScene):
             run_time=2,
         )
 
-        self.wait(5)
-
+        self.wait(1)
+        # 7:45
         # Zoom into the graph and move the final path labels to the center
         self.play(
             self.camera.frame.animate.scale(1 / 1.75).move_to(
@@ -1394,37 +1471,49 @@ class ExampleScene(MovingCameraScene):
 
         # Highlight the final path
         self.play(
-            FadeOut(group_heuristics), FadeOut(group_not_final_path_weights), run_time=2
+            FadeOut(group_heuristics), FadeOut(group_not_final_path_weights), run_time=1.5
         )
+        # 7:48.5
         self.play(
             point_s.animate.set_color(GREEN),
             letter_s.animate.set_color(GREEN),
-            run_time=2,
+            run_time=1.5,
         )
+        # 7:50
         self.play(
             point_b.animate.set_color(GREEN),
             letter_b.animate.set_color(GREEN),
             line_sb.animate.set_color(GREEN),
-            run_time=2,
+            run_time=2.5,
         )
+        # 7:52
         self.play(
             point_h.animate.set_color(GREEN),
             letter_h.animate.set_color(GREEN),
             line_bh.animate.set_color(GREEN),
             run_time=2,
         )
+        # 7:54.5
         self.play(
             point_g.animate.set_color(GREEN),
             letter_g.animate.set_color(GREEN),
             line_hg.animate.set_color(GREEN),
-            run_time=2,
+            run_time=2.5,
         )
-        self.wait(1)
+        # 7:57
+        self.wait(2)
         self.play(
             point_e.animate.set_color(GREEN),
             letter_e.animate.set_color(GREEN),
             line_ge.animate.set_color(GREEN),
             run_time=2,
         )
-
-        self.wait(8)
+        # 8:01
+        self.wait(6)
+        # 8:07
+        self.play(
+            FadeOut(group_complete_graph),
+            FadeOut(group_final_path_labels),
+            FadeOut(group_final_path_weights),
+            run_time=2,
+        )
