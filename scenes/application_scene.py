@@ -134,7 +134,7 @@ class ApplicationScene(MovingCameraScene):
             FadeIn(VGroup(route, logistic, dhl)),
             FadeIn(logistics),
         )
-        self.wait(6)
+        self.wait(4)
         self.play(
             FadeOut(technology_rect),
             FadeOut(VGroup(network, robot, process)),
@@ -145,5 +145,6 @@ class ApplicationScene(MovingCameraScene):
             FadeOut(logistics_rect),
             FadeOut(VGroup(route, logistic, dhl)),
             FadeOut(logistics),
+            FadeOut(title),
         )
         self.wait(5)

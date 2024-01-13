@@ -20,7 +20,7 @@ class PathfindingScene(MovingCameraScene):
         # explain what pathfinding is
         subtitle = Text("What is Pathfinding?", font_size=50)
         self.play(Write(subtitle))
-        self.wait(2)
+        self.wait(3)
         text = Paragraph(
             "Algorithmic search for the optimal path",
             "from a starting point to one or more target points",
@@ -28,15 +28,15 @@ class PathfindingScene(MovingCameraScene):
             alignment="center",
         )
         self.play(ReplacementTransform(subtitle, text))
-        self.wait(10)
+        self.wait(12)
         self.play(FadeOut(text), FadeOut(title))
 
         # graph theorie
         title = Text("Graph Theory", font_size=70)
         self.play(FadeIn(title, shift=DOWN, scale=0.8))
-        self.wait(3)
+        self.wait(5)
         self.play(title.animate.scale(0.5).to_corner(UL))
-        self.wait(1)
+        self.wait(6)
 
         # create graph
         text = Text(
