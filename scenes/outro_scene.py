@@ -2,7 +2,7 @@ import os
 from manim import *
 
 
-class Outro(MovingCameraScene):
+class OutroScene(MovingCameraScene):
     def construct(self):
         # set default font
         Text.set_default(font="Arial")
