@@ -135,7 +135,7 @@ node_modules
 
 # exclude manim media files
 media/**
+video/**
 
 # exclude premiere pro files
 *.prproj
-Adobe Premiere Pro Auto-Save/**
