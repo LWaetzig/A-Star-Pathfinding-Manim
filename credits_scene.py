@@ -1,7 +1,7 @@
 from manim import *
 
 
-class OutroScene(MovingCameraScene):
+class CreditsScene(MovingCameraScene):
     def construct(self):
         # set default font
         Text.set_default(font="Arial")
@@ -36,7 +36,6 @@ class OutroScene(MovingCameraScene):
         self.play(Transform(text_A, alex), run_time=1)
         self.play(Transform(text_N, nicho), run_time=1)
 
-        
         self.play(
             Transform(lucasg, text_L_black),
             Transform(alexg, text_A_black),
