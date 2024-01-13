@@ -32,15 +32,9 @@ class HeuristicScene(MovingCameraScene):
         ad_line2 = Line(ad_point_x.get_center(), ad_point_e.get_center(), buff=0.5)
         ad_weight1 = Text("3", font_size=25).move_to(ad_line1.get_center() + 0.5 * DOWN)
         ad_weight2 = Text("2", font_size=25).move_to(ad_line2.get_center() + 0.5 * DOWN)
-        ad_heur_s = Text("4", font_size=25).move_to(
-            ad_point_s.get_center() + 1 * DOWN
-        )
-        ad_heur_x = Text("1", font_size=25).move_to(
-            ad_point_x.get_center() + 1 * DOWN
-        )
-        ad_heur_e = Text("0", font_size=25).move_to(
-            ad_point_e.get_center() + 1 * DOWN
-        )
+        ad_heur_s = Text("4", font_size=25).move_to(ad_point_s.get_center() + 1 * DOWN)
+        ad_heur_x = Text("1", font_size=25).move_to(ad_point_x.get_center() + 1 * DOWN)
+        ad_heur_e = Text("0", font_size=25).move_to(ad_point_e.get_center() + 1 * DOWN)
 
         ad_graph = VGroup(
             ad_point_s,
@@ -126,10 +120,25 @@ class HeuristicScene(MovingCameraScene):
             font_size=30,
         )
 
+        guaranteetxt = Text(
+            "A* guarantees finding the optimal path", font_size=30
+        ).move_to(1 * DOWN)
+
+        efficiencytxt = Text("A* can be very efficient", font_size=30).move_to(1 * DOWN)
+
+        dependendtxt = Text(
+            "Dependent on the quality of the heuristic and structure of the graph",
+            font_size=30,
+        ).move_to(1 * DOWN)
+
         # Create other stuff
         arrow1 = Arrow(2.4 * UP, 0.8333 * UP, buff=0.35)
         arrow2 = Arrow(0.8333 * UP, 0.8334 * DOWN, buff=0.35)
         arrow3 = Arrow(0.8334 * DOWN, 2.5 * DOWN, buff=0.35)
+
+        arrline = Line(5 * LEFT + 0.3 * DOWN, 5 * LEFT + 1 * DOWN)
+        arrow4 = Arrow(5.25 * LEFT + 1 * DOWN, 3.5 * LEFT + 1 * DOWN)
+        anglearrow = VGroup(arrline, arrow4)
 
         ###############################
         # Start with the video timeline
@@ -173,9 +182,8 @@ class HeuristicScene(MovingCameraScene):
         self.play(Write(priotxt), run_time=1)
         self.play(Create(arrow3), run_time=1)
         self.play(Write(reducetxt), run_time=1)
-        self.wait(7)
-        # 40
-
+        self.wait(5)
+        # 38
         self.play(
             FadeOut(arrow1),
             FadeOut(arrow2),
@@ -187,25 +195,28 @@ class HeuristicScene(MovingCameraScene):
             run_time=1,
         )
         self.wait(1)
+        # 40
 
-        
-        self.play(FadeIn(admissibleexplain), run_time=1)
+        self.play(Write(admissibleexplain), run_time=4)
+        self.wait(2)
+        # 46
+        self.play(FadeIn(anglearrow), run_time=1)
+        self.play(Write(guaranteetxt), run_time=1)
+        self.wait(2)
+        # 50
+        self.play(FadeOut(anglearrow), FadeOut(guaranteetxt), run_time=1)
         self.wait(1)
-
+        # 52
         self.play(admissibleexplain.animate.scale(0.7).to_edge(DOWN), run_time=1)
-
         self.play(FadeIn(ad_graph), FadeIn(nonad_graph), run_time=1)
-        self.wait(1)
-
         self.play(
             ad_graph.animate.move_to(1 * UP),
             nonad_graph.animate.move_to(1.5 * DOWN),
-            run_time=1,
+            run_time=2,
         )
-
-        self.play(FadeIn(admissibletitle), FadeIn(notadmissibletitle), run_time=1)
         self.wait(1)
-
+        # 57
+        self.play(FadeIn(admissibletitle), FadeIn(notadmissibletitle), run_time=1)
         self.play(
             FadeIn(ad_weight1.move_to(ad_line1.get_center() + 0.5 * DOWN)),
             FadeIn(ad_weight2.move_to(ad_line2.get_center() + 0.5 * DOWN)),
@@ -213,29 +224,78 @@ class HeuristicScene(MovingCameraScene):
             FadeIn(nonad_weight2.move_to(nonad_line2.get_center() + 0.5 * DOWN)),
             run_time=1,
         )
-        self.wait(1)
+        self.wait(10)
+        # 1:09
 
         self.play(
             FadeIn(ad_heur_s.move_to(ad_point_s.get_center() + 1 * DOWN)),
             run_time=1,
         )
+        # 1:10
+        self.wait(4)
         self.play(
             FadeIn(ad_heur_x.move_to(ad_point_x.get_center() + 1 * DOWN)),
             run_time=1,
         )
+        # 1:15
+        self.wait(4)
         self.play(
             FadeIn(ad_heur_e.move_to(ad_point_e.get_center() + 1 * DOWN)),
             run_time=1,
         )
-        self.wait(1)
+        self.wait(4.5)
+        # 1:24.5
 
         self.play(
             FadeIn(nonad_heur_s.move_to(nonad_point_s.get_center() + 1 * DOWN)),
-            FadeIn(nonad_heur_x.move_to(nonad_point_x.get_center() + 1 * DOWN)),
-            FadeIn(nonad_heur_e.move_to(nonad_point_e.get_center() + 1 * DOWN)),
             run_time=1,
         )
 
-        
+        # 1:25.5
+        self.wait(1)
+        self.play(
+            FadeIn(nonad_heur_x.move_to(nonad_point_x.get_center() + 1 * DOWN)),
+            run_time=1,
+        )
 
-        self.wait(10)
+        # 1:27.5
+        self.wait(1)
+        self.play(
+            FadeIn(nonad_heur_e.move_to(nonad_point_e.get_center() + 1 * DOWN)),
+            run_time=1,
+        )
+        self.wait(7.5)
+        self.play(
+            FadeOut(ad_graph),
+            FadeOut(nonad_graph),
+            FadeOut(admissibletitle),
+            FadeOut(notadmissibletitle),
+            FadeOut(ad_weight1),
+            FadeOut(ad_weight2),
+            FadeOut(nonad_weight1),
+            FadeOut(nonad_weight2),
+            FadeOut(ad_heur_s),
+            FadeOut(ad_heur_x),
+            FadeOut(ad_heur_e),
+            FadeOut(nonad_heur_s),
+            FadeOut(nonad_heur_x),
+            FadeOut(nonad_heur_e),
+            FadeOut(admissibleexplain),
+            run_time=1,
+        )
+        self.wait(1)
+        # 1:39
+        self.play(Write(efficiencytxt), run_time=1)
+        self.wait(1)
+        # 1:41
+        self.play(FadeIn(anglearrow.move_to(1 * DOWN)), run_time=1)
+        self.play(Write(dependendtxt), run_time=1)
+        self.wait(6)
+        # 1:49
+        self.play(
+            FadeOut(title),
+            FadeOut(efficiencytxt),
+            FadeOut(anglearrow),
+            FadeOut(dependendtxt),
+            run_time=1,
+        )
