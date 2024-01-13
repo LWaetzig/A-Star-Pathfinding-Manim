@@ -3,16 +3,21 @@ from manim import *
 
 class PathfindingScene(MovingCameraScene):
     def construct(self):
+        # set default font
         Text.set_default(font="Arial")
-        self.camera.frame.save_state()
+
+        ###############################
+        # Start video timeline
+        ###############################
 
         self.wait(2)
-        # INTRO PATHFINDING
+        # display title and move it to upper left corner
         title = Text("Pathfinding", font_size=70)
         self.play(FadeIn(title, shift=DOWN, scale=0.8))
         self.wait(1)
         self.play(title.animate.scale(0.5).to_corner(UL))
         self.wait(1)
+        # explain what pathfinding is
         subtitle = Text("What is Pathfinding?", font_size=50)
         self.play(Write(subtitle))
         self.wait(2)
@@ -26,7 +31,7 @@ class PathfindingScene(MovingCameraScene):
         self.wait(10)
         self.play(FadeOut(text), FadeOut(title))
 
-        # GRAPH THEORIE
+        # graph theorie
         title = Text("Graph Theory", font_size=70)
         self.play(FadeIn(title, shift=DOWN, scale=0.8))
         self.wait(3)
@@ -78,7 +83,7 @@ class PathfindingScene(MovingCameraScene):
             FadeOut(graph_dr_subtitle),
         )
 
-        # PATHFINDING IN GRAPH
+        # example
         new_title = Text("Pathfinding", font_size=40).to_corner(UL)
         self.play(ReplacementTransform(title, new_title))
         self.wait(2)
@@ -136,5 +141,4 @@ class PathfindingScene(MovingCameraScene):
         )
 
         self.wait(3)
-
         self.play(FadeOut(graph, shift=UP), FadeOut(new_title, shift=UP))

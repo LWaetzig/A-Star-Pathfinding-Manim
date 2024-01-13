@@ -2,7 +2,7 @@ import os
 from manim import *
 
 
-class PathfindingScene(MovingCameraScene):
+class ApplicationScene(MovingCameraScene):
     def construct(self):
         # set default font
         Text.set_default(font="Arial")
@@ -31,33 +31,50 @@ class PathfindingScene(MovingCameraScene):
         # Start video timeline
         ###############################
         self.wait(2)
-        self.play(FadeIn(title, shift=DOWN, scale=0.8))
+        self.play(FadeIn(title, shift=DOWN, scale=0.8), run_time=1)
         self.wait(1)
-        self.play(title.animate.scale(0.5).to_corner(UL))
-        self.wait(1)
+        self.play(title.animate.scale(0.5).to_corner(UL), run_time=1)
+        self.wait(2)
+
+        # show categories
+        headings = (
+            VGroup(
+                Text("Games", color=WHITE),
+                Text("Logistics", color=WHITE),
+                Text("Technology", color=WHITE),
+            )
+            .arrange(buff=1.5)
+            .move_to(ORIGIN)
+        )
+        self.play(FadeIn(headings), run_time=1)
+        self.wait(5)
+        self.play(FadeOut(headings), run_time=1)
 
         # games
-        self.play(FadeIn(pacman))
-        self.play(pacman.animate.shift(LEFT * 4.2), FadeIn(counter_stike))
-        self.play(counter_stike.animate.shift(RIGHT * 4.2), FadeIn(gta))
+        self.play(FadeIn(pacman), run_time=2)
         self.wait(2)
+        self.play(pacman.animate.shift(LEFT * 4.2), FadeIn(counter_stike), run_time=2)
+        self.wait(2)
+        self.play(counter_stike.animate.shift(RIGHT * 4.2), FadeIn(gta), run_time=2)
+        self.wait(3)
         self.play(
             pacman.animate.scale(0.4).shift(UP * 0.9),
             gta.animate.scale(0.4).shift(LEFT * 4.15, DOWN * 0.5),
             counter_stike.animate.scale(0.4).shift(LEFT * 8.3, DOWN * 2.1),
+            run_time=2,
         )
         games_rect = SurroundingRectangle(
             VGroup(pacman, counter_stike, gta), buff=0.7, corner_radius=0.2, color=WHITE
         )
         games = Text("Games", color=WHITE, font_size=30).next_to(games_rect, UP)
         self.play(Create(games_rect), Write(games))
-        self.wait(2)
+        self.wait(4)
         self.play(
             FadeOut(games_rect),
             FadeOut(VGroup(pacman, counter_stike, gta)),
             FadeOut(games),
         )
-        self.wait(1)
+        self.wait(2)
 
         # logistics
         self.play(FadeIn(route))
@@ -88,10 +105,10 @@ class PathfindingScene(MovingCameraScene):
         self.wait(1)
 
         # technology
-        self.play(FadeIn(network))
-        self.play(network.animate.shift(LEFT * 4.2), FadeIn(robot))
-        self.play(robot.animate.shift(RIGHT * 4.2), FadeIn(process))
-        self.wait(2)
+        self.play(FadeIn(network), run_time=2)
+        self.play(network.animate.shift(LEFT * 4.2), FadeIn(robot), run_time=2)
+        self.play(robot.animate.shift(RIGHT * 4.2), FadeIn(process), run_time=2)
+        self.wait(4)
         self.play(
             network.animate.scale(0.4).shift(RIGHT * 8.4, UP * 0.8),
             process.animate.scale(0.4).shift(RIGHT * 4.2, DOWN * 0.7),
@@ -107,7 +124,7 @@ class PathfindingScene(MovingCameraScene):
             Create(technology_rect),
             Write(technology),
         )
-        self.wait(1)
+        self.wait(4)
         # show all
         self.play(
             FadeIn(games_rect),
@@ -117,7 +134,7 @@ class PathfindingScene(MovingCameraScene):
             FadeIn(VGroup(route, logistic, dhl)),
             FadeIn(logistics),
         )
-        self.wait(2)
+        self.wait(6)
         self.play(
             FadeOut(technology_rect),
             FadeOut(VGroup(network, robot, process)),
@@ -129,4 +146,4 @@ class PathfindingScene(MovingCameraScene):
             FadeOut(VGroup(route, logistic, dhl)),
             FadeOut(logistics),
         )
-        self.wait(2)
+        self.wait(5)
