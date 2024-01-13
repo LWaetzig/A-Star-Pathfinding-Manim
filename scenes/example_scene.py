@@ -4,7 +4,7 @@ from manim import *
 
 class ExampleScene(MovingCameraScene):
     @staticmethod
-    def adjust_line_to_circle_boundary(start_point, end_point):
+    def adjust_line_to_circle_boundary(start_point: list, end_point: list) -> Line:
         """Adjust a line to end on the boundary of a circle
 
         Args:
@@ -22,15 +22,15 @@ class ExampleScene(MovingCameraScene):
         return Line(adjusted_start, adjusted_end)
 
     @staticmethod
-    def create_point(center, label: str):
+    def create_point(center, label: str) -> tuple:
         """Create node with label
 
         Args:
             center (list): location of the node
-            label (_type_): label displayed in the node
+            label (str): label displayed in the node
 
         Returns:
-            tuple: _description_
+            tuple: Tuple containing the node and the label
         """
         circle = Circle(radius=0.25, color=BLUE, fill_opacity=0.5)
         letter = Text(label, color=WHITE).scale(0.5)
