@@ -6,9 +6,9 @@ In this repository, you will find resources related to the A* Pathfinding algori
 
 
 ## Collaborators
-- Alexander Paul (5722106)
-- Nicholas Link (3967704)
-- Lucas Wätzig (8167493)
+- Alexander Paul
+- Nicholas Link
+- Lucas Wätzig
 
 ## Final video
 - you can find every single scene ion this [directory](scenes)
