@@ -11,5 +11,5 @@ In this repository, you will find resources related to the A* Pathfinding algori
 - Lucas Wätzig (8167493)
 
 ## Final video
-- you can find every single scene ion this [directory](scenes)
+- you can find every single scene in this [directory](scenes)
 - final video is published on [YouTube](https://www.youtube.com/watch?v=ZNpexzYxYXs&t=7s)
