@@ -11,5 +11,6 @@ In this repository, you will find resources related to the A* Pathfinding algori
 - Lucas Wätzig
 
 ## Final video
+- final video can be found [here](APathfinding.mp4)
 - you can find every single scene in this [directory](scenes)
-- final video is published on [YouTube](https://www.youtube.com/watch?v=ZNpexzYxYXs&t=7s)
+- final video is also published on [YouTube](https://www.youtube.com/watch?v=ZNpexzYxYXs&t=7s)
