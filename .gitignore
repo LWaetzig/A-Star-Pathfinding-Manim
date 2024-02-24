@@ -132,3 +132,10 @@ dmypy.json
 
 # exclude node mdoules
 node_modules
+
+# exclude manim media files
+media/**
+video/**
+
+# exclude premiere pro files
+*.prproj
