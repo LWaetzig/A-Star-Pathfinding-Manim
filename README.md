@@ -4,7 +4,7 @@
 In this repository, you will find resources to a explanatory video about the A* Pathfinding algorithm. We aim to provide a comprehensive understanding of how the algorithm works and its applications.
 
 ## Collaborators
-- [Alexander Paul]
+- [Alexander Paul]()
 - [Nicholas Link]()
 - [Lucas Wätzig]()
 
